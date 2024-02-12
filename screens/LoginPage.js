@@ -8,9 +8,7 @@ import {
   Button,
   TextInput,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import styles from './LoginPageStyle';
-import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
 const LoginPage = ({navigation}) => {
 
