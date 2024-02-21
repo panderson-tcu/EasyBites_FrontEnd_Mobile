@@ -44,8 +44,13 @@ const LoginPage = ({navigation}) => {
           <Text style={styles.signUp}>Sign Up</Text>
         </Text>
       </Pressable>
-      <Pressable style={[styles.loginButton, styles.logInTitleFlexBox]}>
-        <Text style={[styles.login, styles.textTypo]}>Login</Text>
+      <Pressable 
+        style={[styles.loginButton, styles.logInTitleFlexBox]}
+        onPress={() => navigation.navigate("Home")}
+        >
+        <Text 
+          style={[styles.login, styles.textTypo]}
+        >{`Login`}</Text>
       </Pressable>
       <Text style={[styles.logInTitle, styles.logInTitleFlexBox]}>
         Welcome Back
