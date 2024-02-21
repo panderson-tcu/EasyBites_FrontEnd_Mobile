@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   StyleSheet,
+  SafeAreaView,
   View,
   Pressable,
   Text,
@@ -8,9 +9,7 @@ import {
   Button,
   TextInput,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import styles from './LoginPageStyle';
-import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
 const LoginPage = ({navigation}) => {
 
@@ -46,8 +45,13 @@ const LoginPage = ({navigation}) => {
           <Text style={styles.signUp}>Sign Up</Text>
         </Text>
       </Pressable>
-      <Pressable style={[styles.loginButton, styles.logInTitleFlexBox]}>
-        <Text style={[styles.login, styles.textTypo]}>Login</Text>
+      <Pressable 
+        style={[styles.loginButton, styles.logInTitleFlexBox]}
+        onPress={() => navigation.navigate("Home")}
+        >
+        <Text 
+          style={[styles.login, styles.textTypo]}
+        >{`Login`}</Text>
       </Pressable>
       <Text style={[styles.logInTitle, styles.logInTitleFlexBox]}>
         Welcome Back
