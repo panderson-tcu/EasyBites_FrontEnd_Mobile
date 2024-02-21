@@ -9,6 +9,7 @@ import Quiz1 from "./screens/Quiz1";
 // npm install @react-navigation/native @react-navigation/native-stack
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import Home from "./screens/Home";
 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
@@ -40,6 +41,11 @@ const App = () => {
             <Stack.Screen
               name="Quiz1"
               component={Quiz1}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
