@@ -92,7 +92,7 @@ function MyTabs() {
 
 function App () {
   return ( 
-    // <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
+    <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="LoginPage"
@@ -125,7 +125,7 @@ function App () {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    // </ClerkProvider>
+    </ClerkProvider>
   );
 };
 
