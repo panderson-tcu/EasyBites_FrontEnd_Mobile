@@ -16,6 +16,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons";
 
+// Clerk imports
+import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { ClerkProvider } from "@clerk/clerk-expo";
+import Constants from "expo-constants"
+
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -85,42 +91,64 @@ function MyTabs() {
 }
 
 function App () {
-
   return ( 
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="LoginPage"
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen
-          name="LoginPage"
-          component={LoginPage}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpCreateAccount"
-          component={SignUpCreateAccount}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Quiz"
-          component={Quiz}
-          options={{ headerShown: false}}
-        />
-        <Stack.Screen
-          name="Quiz1"
-          component={Quiz1}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={MyTabs}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="LoginPage"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen
+            name="LoginPage"
+            component={LoginPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpCreateAccount"
+            component={SignUpCreateAccount}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Quiz"
+            component={Quiz}
+            options={{ headerShown: false}}
+          />
+          <Stack.Screen
+            name="Quiz1"
+            component={Quiz1}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={MyTabs}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ClerkProvider>
   );
 };
+
+// Default expo App function
+// export default function App() {
+//   return (
+//     <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
+//       <SafeAreaView style={styles.container}>
+//         <Text>Hello world!</Text>
+//       </SafeAreaView>
+//     </ClerkProvider>
+//   );
+// }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 export default App;
 
