@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
     EBIcon: {
       top: 47,
       left: 98,
-      width: 195,
+      width: 190,
       height: 173,
       position: "absolute",
     },
     signUpCreateAccount: {
-      backgroundColor: Color.colorWhitesmoke,
+      backgroundColor: "#f2f1ed",
       flex: 1,
       width: "100%",
       height: 844,

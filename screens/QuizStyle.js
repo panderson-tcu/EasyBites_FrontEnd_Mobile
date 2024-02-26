@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
       position: "absolute",
     },
     quiz0: {
-      backgroundColor: Color.colorWhitesmoke,
+      backgroundColor: "#f2f1ed",
       flex: 1,
       width: "100%",
       height: 844,
