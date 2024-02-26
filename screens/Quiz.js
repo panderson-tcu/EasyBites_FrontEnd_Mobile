@@ -26,7 +26,7 @@ const Quiz = ({navigation}) => {
       >
         <Text style={[styles.takeQuiz]}>{`Take Quiz `}</Text>
       </Pressable>
-      <Pressable style={styles.skip} onPress={() => navigation.navigate("LoginPage")}>
+      <Pressable style={styles.skip} onPress={() => navigation.navigate("Home")}>
         {/* change later to profile pagenlanding */}
         <Text style={[styles.skip1]}>{`Skip `}</Text>
         {/* implement home page without any preferences selected. */}
