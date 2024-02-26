@@ -21,7 +21,7 @@ export default function Favorites({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#d9d9d9',
+        backgroundColor: '#f2f1ed',
         alignIems: 'center',
         justifyContent: 'center',
         marginleft: 30,

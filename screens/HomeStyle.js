@@ -3,7 +3,7 @@ import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
 const styles = StyleSheet.create({
     home: {
-      backgroundColor: Color.colorWhitesmoke,
+      backgroundColor: "#f2f1ed",
       flex: 1,
       width: "100%",
       height: 844,
