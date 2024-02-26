@@ -10,11 +10,13 @@ ScrollView
 
 export default function Profile({navigation}) {
     return (
-        <View style={styles.container}>
-            <Text
-                style={{ fontSize: 26, fontWeight: 'bold' }}>Profile Screen!</Text>
-            <StatusBar style="auto" />
-        </View>
+        <SafeAreaView>
+            <View style={styles.container}>
+                <Text
+                    style={{ fontSize: 26, fontWeight: 'bold' }}>Profile Screen!</Text>
+                <StatusBar style="auto" />
+            </View>
+        </SafeAreaView>
     );
 }
 
