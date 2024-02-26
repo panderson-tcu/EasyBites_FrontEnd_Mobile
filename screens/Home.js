@@ -1,36 +1,30 @@
-import { StatusBar } from "expo-status-bar";
 import * as React from "react";
-import { 
-View,
-Text,
-Pressable,
-StyleSheet,
-SafeAreaView,
-ScrollView
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  SafeAreaView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import RecipeCard from "../components/RecipeCard";
+import styles from "./HomeStyle";
 
-export default function Home({navigation}) {
-    return (
-        <View style={styles.container}>
-            <Text
-                style={{ fontSize: 26, fontWeight: 'bold' }}>Home Screen!</Text>
-            <StatusBar style="auto" />
-            <Pressable
-                style={styles.haveAnAccountContainer}
-                onPress={() => navigation.navigate("LoginPage")}>
-          <Text style={styles.haveAnAccount}>{`Back to login page `}</Text>
-      </Pressable>
-        </View>
-    );
-}
+const Home = () => {
+  const navigation = useNavigation();
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f2f1ed',
-        alignIems: 'center',
-        justifyContent: 'center',
-        marginleft: 30,
-        marginTop: 5,
-    }
-})
+  return (
+    <SafeAreaView style={styles.home}>
+      <View style={styles.cardWrapper}>
+        <RecipeCard style={styles.card}></RecipeCard>
+        <RecipeCard style={styles.card}></RecipeCard>
+        <RecipeCard style={styles.card}></RecipeCard>
+
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default Home;
