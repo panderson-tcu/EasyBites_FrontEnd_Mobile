@@ -21,7 +21,7 @@ const LoginPage = ({navigation}) => {
         mode="outlined"
         theme={{
           fonts: { regular: { fontFamily: "Arial", fontWeight: "Bold" } },
-          colors: { text: "#000", background: "#d9d9d9" }
+          colors: { text: "#000", background: "#f2f1ed" }
         }} />
       <Text style={[styles.username, styles.textTypo]}></Text>
 
@@ -31,7 +31,7 @@ const LoginPage = ({navigation}) => {
         mode="outlined"
         theme={{
           fonts: { regular: { fontFamily: "Arial", fontWeight: "Bold" } },
-          colors: { text: "#000", background: "#d9d9d9" },
+          colors: { text: "#000", background: "#f2f1ed" },
         }} />
       <Text style={[styles.password, styles.textTypo]}></Text>
 
