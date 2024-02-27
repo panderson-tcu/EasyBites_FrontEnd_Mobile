@@ -123,6 +123,11 @@ function App () {
             component={MyTabs}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="RecipeInfo"
+            component={MyTabs}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ClerkProvider>
