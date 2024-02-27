@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -12,11 +12,23 @@ import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import RecipeCard from "../components/RecipeCard";
 import styles from "./HomeStyle";
+import axios from 'axios';
 
 const Home = () => {
   const navigation = useNavigation();
+  const [recipes, setRecipes] = useState([]);
 
-  const recipes = [
+  useEffect(() => {
+    axios.get("http://localhost/recipes/approved")
+      .then(response => {
+        setRecipes(response.data.data);
+      })
+      .catch(error => {
+        console.error("Error fetching recipes:", error);
+      })
+  }, []);
+
+  const allRecipes = [
         {
             recipeId: 207,
             title: "Taco Bowl",
@@ -154,35 +166,6 @@ const Home = () => {
                 {
                   allergenId: 2008,
                   name: "None"
-                }
-            ],
-        },
-        {
-            recipeId: 4,
-            title: "Chicken Pad See Ew",
-            cooktime: 60,
-            imageUrl: "https://easybitesblobstorage.blob.core.windows.net/recipephotos/Recipe_Photos/4-Chicken-Pad-See-Ew.png",
-            estimatedCost: 26.14,
-            protein: {
-                proteinId: 1000,
-                proteinName: "Chicken"
-            },
-            allergens: [
-                {
-                  allergenId: 2001,
-                  name: "Eggs"
-                },
-                {
-                  allergenId: 2004,
-                  name: "Soy"
-                },
-                {
-                  allergenId: 2007,
-                  name: "Fish"
-                },
-                {
-                  allergenId: 2006,
-                  name: "Shellfish"
                 }
             ],
         },
@@ -359,8 +342,8 @@ const Home = () => {
     <SafeAreaView style={styles.home}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>
-          {recipes.map((recipe) => (
-                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe}>
+          {allRecipes.map((recipe) => (
+                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeDetail', { recipe })}>
                         </RecipeCard>
                     ))}
         </View>
