@@ -31,7 +31,7 @@ const screenOptions = {
                 tabBarStyle: {
                     position: 'absolute',
                     elevation: 0,
-                    height: 50,
+                    height: 70,
                     backgroundColor: '#7B886B',
                     shadowColor: '#EFEBE7',
                     shadowOpacity: 12,
@@ -51,7 +51,7 @@ function MyTabs() {
             options={{
                 tabBarIcon: ({focused}) => {
                     return ( // ternary operator for focused! black focused, cream/white when not
-                    <Ionicons name="home-outline" size={30} color={focused ? "#000000": "#EFEBE7"} />
+                    <Ionicons name="home-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
                     )
                 }
             }}  /> 
@@ -61,7 +61,7 @@ function MyTabs() {
             options={{
                 tabBarIcon: ({focused}) => {
                     return ( 
-                    <Ionicons name="heart-outline" size={30} color={focused ? "#000000": "#EFEBE7"} />
+                    <Ionicons name="heart-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
                     )
                 }
             }} />
@@ -71,7 +71,7 @@ function MyTabs() {
             options={{
                 tabBarIcon: ({focused}) => {
                     return ( 
-                    <Ionicons name="cart-outline" size={30} color={focused ? "#000000": "#EFEBE7"} />
+                    <Ionicons name="cart-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
                     )
                 }
             }} />
@@ -81,7 +81,7 @@ function MyTabs() {
             options={{
                 tabBarIcon: ({focused}) => {
                     return ( 
-                    <Ionicons name="person-circle-outline" size={30} color={focused ? "#000000": "#EFEBE7"} />
+                    <Ionicons name="person-circle-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
                     )
                 }
             }} />
