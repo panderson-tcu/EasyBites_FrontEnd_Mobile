@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome6 } from '@expo/vector-icons';
-import styles from './ShoppingCartStyle'; // Import your styles
+import styles from './RecipeInfoStyle'; // Import your styles
 
-const ShoppingCart = () => {
+const RecipeInfo = () => {
   return (
     <ScrollView>
         <View style={styles.imageContainer}>
@@ -65,4 +65,4 @@ const ShoppingCart = () => {
   );
 };
 
-export default ShoppingCart;
+export default RecipeInfo;
