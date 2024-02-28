@@ -1,10 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './ShoppingCartStyle'; // Import your styles
+import axios from 'axios';
 
-const ShoppingCart = () => {
+
+const ShoppingCart = ({ route }) => {
+  const {recipe} = route.params;
+  const [recipeInfo, setRecipeInfo] = useState();
+  console.log(recipe)
+  console.log(recipe.recipeId)
+  useEffect(() => {
+    axios.get(`http://localhost/recipes/${recipe.recipeId}`)
+      .then(response => {
+        setRecipeInfo(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching recipeInfo:", error);
+      })
+  }, []);
+  
+
+  console.log(recipeInfo)
   return (
     <ScrollView>
         <View style={styles.imageContainer}>
@@ -22,7 +40,7 @@ const ShoppingCart = () => {
             </View>
         </View>
         <View style={styles.cardContent}>
-          <Text style={styles.recipeName}>Chickpea Salad</Text>
+          <Text style={styles.recipeName}>{recipe.title}</Text>
           <View style={styles.allergenIcon}>
             <FontAwesome6 name="wheat-awn" size={16} color="black" />
           </View>

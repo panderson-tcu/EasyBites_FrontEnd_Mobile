@@ -7,6 +7,7 @@ import {
   View,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
@@ -19,7 +20,7 @@ const Home = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost/recipes/approved")
+    axios.get("http:/localhost/recipes/approved")
       .then(response => {
         setRecipes(response.data.data);
       })
@@ -342,8 +343,8 @@ const Home = () => {
     <SafeAreaView style={styles.home}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>
-          {allRecipes.map((recipe) => (
-                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeDetail', { recipe })}>
+          {recipes.map((recipe) => (
+                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('ShoppingCart', { recipe })}>
                         </RecipeCard>
                     ))}
         </View>
