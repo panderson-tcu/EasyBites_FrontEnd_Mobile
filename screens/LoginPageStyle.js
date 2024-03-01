@@ -3,11 +3,22 @@ import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
 const styles = StyleSheet.create({
     loginLayout: {
-      height: 47,
-      width: 296,
-      left: 47,
-      borderRadius: Border.br_3xs,
+      height: '5%',
+      width: '65%',
+      top: '60%',
+      left: '18%',
+      borderRadius: 15,
       position: "absolute",
+      backgroundColor: '#D9D9D9'
+    },
+    userLoginLayout: {
+      height: '5%',
+      width: '65%',
+      top: '52%',
+      left: '18%',
+      borderRadius: 15,
+      position: "absolute",
+      backgroundColor: '#D9D9D9'
     },
     textTypo: {
       textAlign: "center",
@@ -19,32 +30,33 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
       position: "absolute",
+      width: '100%',
     },
     loginPageChild: {
-      top: 358,
+      top: '100%',
     },
-    username: {
-      top: 371,
-      color: Color.colorGray_200,
-      left: 75,
-      textAlign: "left",
-      fontSize: FontSize.size_xs,
-      position: "absolute",
-    },
-    password: {
-      top: 445,
-      color: Color.colorGray_200,
-      left: 75,
-      textAlign: "left",
-      fontSize: FontSize.size_xs,
-      position: "absolute",
-    },
+    // username: {
+    //   top: '30%',
+    //   color: Color.colorGray_200,
+    //   left: 75,
+    //   textAlign: "left",
+    //   fontSize: FontSize.size_xs,
+    //   position: "absolute",
+    // },
+    // password: {
+    //   top: '45%',
+    //   color: Color.colorGray_200,
+    //   left: 75,
+    //   textAlign: "left",
+    //   fontSize: FontSize.size_xs,
+    //   position: "absolute",
+    //   backgroundColor: "black",
+    // },
     dontHaveAn: {
       color: Color.colorBlack,
     },
     signUp: {
       color: Color.colorIndigo,
-  
     },
     text: {
       width: 155,
@@ -52,8 +64,8 @@ const styles = StyleSheet.create({
       fontSize: FontSize.size_xs,
     },
     dontHaveAnContainer: {
-      left: 118,
-      top: 740,
+      left: '33%',
+      top: '76%',
       position: "absolute",
     },
     login: {
@@ -62,48 +74,49 @@ const styles = StyleSheet.create({
       fontSize: FontSize.size_xs,
     },
     loginButton: {
-      top: 544,
-      left: 78,
+      top: '70%',
+      marginHorizontal: '16.8%',
       backgroundColor: Color.colorSandybrown,
       flexDirection: "row",
-      paddingHorizontal: 102,
+      // paddingHorizontal: '1%',
       paddingVertical: Padding.p_5xs,
       alignItems: "center",
       borderRadius: Border.br_3xs,
       overflow: "hidden",
+      maxWidth: '60%',
     },
     logInTitle: {
-      top: 246,
-      left: 42,
+      top: '38%',
+      // left: '15%',
       fontSize: FontSize.size_26xl,
       color: Color.colorGray_100,
       textAlign: "center",
       display: "flex",
-      width: 307,
+      width: '100%',
       height: 98,
       fontFamily: FontFamily.Arial,
       fontWeight: "700",
       alignItems: "center",
     },
     EBIcon: {
-      top: 51,
-      left: 98,
+      top: "17%",
+      left: "26%",
       width: 195,
       height: 173,
-      position: "absolute",
+      position: "relative",
     },
     loginPage: {
       backgroundColor: "#f2f1ed",
       flex: 1,
       width: "100%",
-      height: 844,
+      height: '100%',
       overflow: "hidden",
     },
     usernameInput: {
-      top: 356,
+      paddingLeft: '10%',    
     },
     passwordInput: {
-      top: 431
+      paddingLeft: '10%',    
     }
   });
 
