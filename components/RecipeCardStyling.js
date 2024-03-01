@@ -9,7 +9,9 @@ const styles = StyleSheet.create({
       width: '45%',
       padding: 0,
       // flexShrink: 2,
-      margin: '2.5%',
+      marginHorizontal: '2.5%',
+      marginBottom: '5%',
+
     },
     cardComponent: {
       margin: 0,
@@ -17,7 +19,7 @@ const styles = StyleSheet.create({
       backgroundColor: Color.colorWhitesmoke,
       padding: 10,
     },
-    heartIcon: {
+    actionIcon: {
       backgroundColor: '#B7A6DE',
       alignSelf: 'flex-end',
       borderRadius: 5,
@@ -54,8 +56,8 @@ const styles = StyleSheet.create({
     allergenIcon: {
       backgroundColor: '#F7B27D',
       alignSelf: 'flex-end',
-      padding: 3,
-      borderRadius: 5,
+      padding: '3%',
+      borderRadius: 15,
     }
   });
 

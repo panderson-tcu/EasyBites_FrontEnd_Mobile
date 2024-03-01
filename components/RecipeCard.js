@@ -13,8 +13,10 @@ import { Card } from '@rneui/themed';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './RecipeCardStyling'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const RecipeCard = ({recipe, onPress}) => {
+
+const RecipeCard = ({recipe, onPress, currentPage}) => {
     // console.log("recipe card rendering")
     return (
       <TouchableOpacity onPress={onPress} style={styles.cardView}>
@@ -22,8 +24,9 @@ const RecipeCard = ({recipe, onPress}) => {
         {/* <View> */}
           <Card containerStyle={styles.cardComponent}>
             <View style={styles.cardImageContainer}>
-                <View style={styles.heartIcon}>
-                  <Ionicons name="heart-outline" size={24}></Ionicons>
+                <View style={styles.actionIcon}>
+                {currentPage === 'Home' && <Ionicons name="heart-outline" size={24}/>}
+                {currentPage === 'Favorites' && <Ionicons name="add-circle-outline" size={24}/>}
                 </View>
               <Card.Image style={styles.cardImage}source={{uri: recipe.imageUrl}} />
 
@@ -35,7 +38,13 @@ const RecipeCard = ({recipe, onPress}) => {
                 <Ionicons name="time-outline" size={16}></Ionicons>
                 <Text style={styles.recipeTime}>{recipe.cooktime} minutes</Text>
                 <View style={styles.allergenIcon}>
-                  <FontAwesome6 name="wheat-awn" size={16} color="black" />
+                  {/* <MaterialCommunityIcons name="egg-outline" size={16} color="black" /> */}
+                  {/* <FontAwesome6 name="wheat-awn" size={16} color="black" />
+                  <MaterialCommunityIcons name="cow" size={16} color="black" />
+                  <MaterialCommunityIcons name="peanut-outline" size={16} color="black" /> */}
+                  <FontAwesome6 name="shrimp" size={16} color="black" />
+                  {/* <Ionicons name="fish-outline" size={16} color="black" /> */}
+                  {/* need to add tree nut and soy */}
                 </View>
               </View>
             </View>
