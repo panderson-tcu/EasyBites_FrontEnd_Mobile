@@ -9,7 +9,7 @@ export const FontSize = {
 };
 /* Colors */
 export const Color = {
-  colorWhitesmoke: "#efebe7",
+  colorWhitesmoke: "#f2f1ed",
   colorGray_100: "#7b886b",
   colorGray_200: "rgba(0, 0, 0, 0.5)",
   colorSandybrown: "#f7b27d",
