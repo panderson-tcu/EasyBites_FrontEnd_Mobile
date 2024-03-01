@@ -15,6 +15,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './RecipeCardStyling'
 
 const RecipeCard = ({recipe, onPress}) => {
+    // console.log("recipe card rendering")
     return (
       <TouchableOpacity onPress={onPress} style={styles.cardView}>
         {/* <View style={styles.cardView}> */}

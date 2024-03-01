@@ -9,6 +9,7 @@ import Home from "./screens/Home";
 import ShoppingCart from "./screens/ShoppingCart";
 import Favorites from "./screens/Favorites";
 import Profile from "./screens/Profile";
+import RecipeInfo from './screens/RecipeInfo'
 // navigation needed for app stack. run the below in app directory:
 // npm install @react-navigation/native @react-navigation/native-stack
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -125,7 +126,7 @@ function App () {
           />
           <Stack.Screen
             name="RecipeInfo"
-            component={MyTabs}
+            component={RecipeInfo}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

@@ -7,26 +7,42 @@ import axios from 'axios';
 
 
 const ShoppingCart = ({ route }) => {
-  const {recipe} = route.params;
+  console.log("entering shopping cart page")
+  // const {recipe} = route.params;
   const [recipeInfo, setRecipeInfo] = useState();
-  console.log(recipe)
-  console.log(recipe.recipeId)
-  useEffect(() => {
-    axios.get(`http://localhost/recipes/${recipe.recipeId}`)
-      .then(response => {
-        setRecipeInfo(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching recipeInfo:", error);
-      })
-  }, []);
+  // console.log(recipe)
+  // console.log(recipe.recipeId)
+  console.log("calling useEffect")
+
+  // const recipeId = recipe.recipeId
+
+  // useEffect(() => {
+  //   const fetchRecipeDetails = async () => {
+
+  //     console.log("chicken butt")
+  //     if(recipeId){
+  //       axios.get(`http://localhost/recipes/${recipeId}`)
+  //       .then(response => {
+  //         console.log("pizza butt")
+  //         setRecipeInfo(response.data.data);
+  //       })
+  //       .catch(error => {
+  //         console.error("Error fetching recipeInfo:", error);
+  //       })
+  //     }
+  //   };
+  //   fetchRecipeDetails();
+
+  // }, [recipeId]);
   
 
   console.log(recipeInfo)
+
+  // console.log(recipeInfo.servings)
   return (
     <ScrollView>
         <View style={styles.imageContainer}>
-            <Image source={require('../assets/chickpeasalad.png')} style={styles.cardImage} />
+            {/* <Image source={require('../assets/chickpeasalad.png')} style={styles.cardImage} />
             <TouchableOpacity style={styles.iconContainerLeft}>
             <Ionicons name="chevron-back-outline" size={24} color="#FFF" />
             </TouchableOpacity>
@@ -40,44 +56,26 @@ const ShoppingCart = ({ route }) => {
             </View>
         </View>
         <View style={styles.cardContent}>
-          <Text style={styles.recipeName}>{recipe.title}</Text>
+          <Text style={styles.recipeName}>{recipeInfo.title}</Text>
           <View style={styles.allergenIcon}>
             <FontAwesome6 name="wheat-awn" size={16} color="black" />
           </View>
           <View style={styles.recipeInfoRow}>
             <Ionicons name="time-outline" size={16} style={styles.icon}></Ionicons>
-            <Text style={styles.recipeInfoItem}>25 mins</Text>
+            <Text style={styles.recipeInfoItem}>{recipeInfo.cooktime} mins</Text>
             <Ionicons name="people-outline" size={18} style={styles.icon}></Ionicons>
-            <Text style={styles.recipeInfoItem}> 4</Text>
+            <Text style={styles.recipeInfoItem}>{recipeInfo.servings}</Text>
             <FontAwesome6 name="dollar-sign" size={16} color="black" style={styles.icon}/>
-            <Text style={styles.recipeInfoItem}>6.71</Text>
+            <Text style={styles.recipeInfoItem}>{recipeInfo.estimatedCost}</Text>
           </View>
             <View style={styles.cardView}>
-            <Text style={styles.Title}>Ingredients</Text>
-            <Text style={styles.recipeIngredients}>1 can Chickpeas (aka Garbanzo Beans) {"\n"} {"\n"} 
-                1/2 cup diced Celery (about 2 stalks) {"\n"} {"\n"} 
-                1/3 cup diced Pickles (slices will be easiest){"\n"} {"\n"} 
-                1/4 cup diced Onion (about 1/4 onion){"\n"} {"\n"} 
-                1 1/2 Tbsp Fresh Dill, chopped finely (optional){"\n"} {"\n"} 
-                1/4 cup Greek Yogurt{"\n"} {"\n"} 
-                Juice of 1 Lemon (about 1.5-2 Tbsp){"\n"} {"\n"} 
-                1/2 tsp Salt{"\n"} {"\n"} 
-                1/2 tsp Pepper{"\n"} {"\n"} 
-                1/2 tsp Garlic Powder{"\n"} {"\n"} 
-                1 Tbsp Nutritional Yeast (optional)</Text>
+              <Text style={styles.Title}>Ingredients</Text>
+              <Text style={styles.recipeIngredients}>{recipeInfo.ingredientsQuantity}</Text>
             </View>
-            {/* <View style={styles.cardView}>
-                <Text style={styles.Title}>Appliances</Text>
-                <Image source={require('../assets/largemixing.png')} style={styles.applicanceImage} />
-            </View> */}
             <View style={styles.bottomCardView}>
-            <Text style={styles.Title}>Directions</Text>
-            <Text style={styles.recipeDirections}>Drain and rinse chickpeas and place in a large bowl.{"\n"} 
-                Mash until part chunky and part smooth, until desired texture.{"\n"} 
-                To dice celery, slice in half lengthwise, and then slice in half lengthwise again, then dice.{"\n"} 
-                Add the rest of the ingredients and stir thoroughly.{"\n"} 
-                Let sit in fridge for 1 hour if possible to let flavors blend. Add more seasoning if desired.</Text>
-            </View>
+              <Text style={styles.Title}>Directions</Text>
+              <Text style={styles.recipeDirections}>{recipeInfo.instructions}</Text>
+            </View> */}
         </View>
     </ScrollView>
   );

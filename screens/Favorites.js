@@ -9,6 +9,8 @@ ScrollView
 } from "react-native";
 
 export default function Favorites({navigation}) {
+    console.log("entering favorites page")
+
     return (
         <View style={styles.container}>
             <Text
