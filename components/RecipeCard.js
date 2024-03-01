@@ -18,6 +18,69 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const RecipeCard = ({recipe, onPress, currentPage}) => {
     // console.log("recipe card rendering")
+    let allergens = recipe.allergens;
+    console.log(allergens)
+
+    const renderAllergenIcons = () => {
+      return allergens.map((allergen) => {
+        switch (allergen.name) {
+          case 'Shellfish':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: 'rgba(231, 103, 103, 0.67)' }]}>
+                <FontAwesome6 name="shrimp" size={16} color="black" />
+              </View>
+            );
+          case 'Fish':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#A4B2D8' }]}>
+                <Ionicons name="fish-outline" size={16} color="black" />
+              </View>
+            );
+          case 'Milk':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#rgba(171, 64, 57, .6)' }]}>
+                  <MaterialCommunityIcons name="cow" size={16} color="black" />
+                </View>
+            );
+          case 'Soy':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#9CB99F' }]}>
+                  <Text style={styles.allergenText}>soy</Text>
+                </View>
+            );
+          case 'Wheat':
+              return (
+                <View style={[styles.allergenIcon, { backgroundColor: '#B49782' }]}>
+                  <FontAwesome6 name="wheat-awn" size={16} color="black" />
+                </View>
+              );
+          case 'Eggs':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#E2C971' }]}>
+                <MaterialCommunityIcons name="egg-outline" size={16} color="black" />
+              </View>
+            );
+          case 'Peanuts':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#AC9BD5' }]}>
+                  <MaterialCommunityIcons name="peanut-outline" size={16} color="black" />
+                </View>
+            );
+          case 'Tree Nuts':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#F7B27D' }]}>
+                  <Text style={styles.allergenText}>nut</Text>
+                </View>
+            );
+          // Add cases for other allergens and their corresponding icons
+          default:
+            return null; // Render nothing if the allergen doesn't have a corresponding icon
+        }
+      });
+    };
+
+
+
     return (
       <TouchableOpacity onPress={onPress} style={styles.cardView}>
         {/* <View style={styles.cardView}> */}
@@ -37,14 +100,8 @@ const RecipeCard = ({recipe, onPress, currentPage}) => {
               <View style={styles.timeContainer}>
                 <Ionicons name="time-outline" size={16}></Ionicons>
                 <Text style={styles.recipeTime}>{recipe.cooktime} minutes</Text>
-                <View style={styles.allergenIcon}>
-                  {/* <MaterialCommunityIcons name="egg-outline" size={16} color="black" /> */}
-                  {/* <FontAwesome6 name="wheat-awn" size={16} color="black" />
-                  <MaterialCommunityIcons name="cow" size={16} color="black" />
-                  <MaterialCommunityIcons name="peanut-outline" size={16} color="black" /> */}
-                  <FontAwesome6 name="shrimp" size={16} color="black" />
-                  {/* <Ionicons name="fish-outline" size={16} color="black" /> */}
-                  {/* need to add tree nut and soy */}
+                <View style={styles.allergenIconsContainer}>
+                  {renderAllergenIcons()}
                 </View>
               </View>
             </View>

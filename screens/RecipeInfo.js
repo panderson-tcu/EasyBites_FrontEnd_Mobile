@@ -12,11 +12,13 @@ const RecipeInfo = ({ route }) => {
   const [recipeInfo, setRecipeInfo] = useState();
   console.log(recipe)
   console.log(recipe.recipeId)
-  console.log("calling useEffect")
+  console.log("about to call useEffect")
 
   const recipeId = recipe.recipeId
 
   useEffect(() => {
+    console.log("guess what")
+
     const fetchRecipeDetails = async () => {
       console.log("chicken butt")
       if(recipeId){
