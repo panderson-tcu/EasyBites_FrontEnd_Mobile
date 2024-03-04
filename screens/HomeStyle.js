@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
   
     },
     card: {
+    },
+    scrollViewcontent: {
+        flexGrow: 1,
     }
   });
 
