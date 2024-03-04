@@ -349,7 +349,7 @@ const Home = () => {
     const handleSearch = (query) => {
       setSearchQuery(query);
     };
-    const filteredRecipes = allRecipes.filter((recipe) =>
+    const filteredRecipes = recipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 

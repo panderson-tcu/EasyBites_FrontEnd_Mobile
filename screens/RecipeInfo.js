@@ -4,27 +4,39 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './RecipeInfoStyle'; // Import your styles
 import axios from 'axios';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const RecipeInfo = ({ route }) => {
   console.log("In RecipeInfo stack screen")
   const {recipe} = route.params;
-  const [recipeInfo, setRecipeInfo] = useState();
-  console.log(recipe)
-  console.log(recipe.recipeId)
-  console.log("about to call useEffect")
+  // let recipeInfo;
+  const [recipeInfo, setRecipeInfo] = useState({
+    title: '',
+    cooktime: '',
+    ingredientsQuantity: '',
+    estimatedCost: '',
+    instructions: '',
+    servings: '',
+    protein: {},
+    ingredients: [],
+    appliances: [],
+    allergens: [],
+  });
+  // console.log(recipe)
+  // console.log(recipe.recipeId)
+  // console.log("about to call useEffect")
 
+  // let recipeId = -10;
   const recipeId = recipe.recipeId
 
   useEffect(() => {
-    console.log("guess what")
 
     const fetchRecipeDetails = async () => {
-      console.log("chicken butt")
       if(recipeId){
         axios.get(`http://localhost/recipes/${recipeId}`)
         .then(response => {
-          console.log("pizza butt")
+          console.log(response.data.data)
           setRecipeInfo(response.data.data);
         })
         .catch(error => {
@@ -36,14 +48,74 @@ const RecipeInfo = ({ route }) => {
 
   }, [recipeId]);
   
-
+  
+  console.log("printing recipeInfo")
   console.log(recipeInfo)
+
+  const renderAllergenIcons = () => {
+    return recipeInfo.allergens.map((allergen) => {
+      switch (allergen.name) {
+        case 'Shellfish':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: 'rgba(231, 103, 103, 0.67)' }]}>
+              <FontAwesome6 name="shrimp" size={16} color="black" />
+            </View>
+          );
+        case 'Fish':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: '#A4B2D8' }]}>
+              <Ionicons name="fish-outline" size={16} color="black" />
+            </View>
+          );
+        case 'Milk':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: '#rgba(171, 64, 57, .6)' }]}>
+                <MaterialCommunityIcons name="cow" size={16} color="black" />
+              </View>
+          );
+        case 'Soy':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: '#9CB99F' }]}>
+                <Text style={styles.allergenText}>soy</Text>
+              </View>
+          );
+        case 'Wheat':
+            return (
+              <View style={[styles.allergenIcon, { backgroundColor: '#B49782' }]}>
+                <FontAwesome6 name="wheat-awn" size={16} color="black" />
+              </View>
+            );
+        case 'Eggs':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: '#E2C971' }]}>
+              <MaterialCommunityIcons name="egg-outline" size={16} color="black" />
+            </View>
+          );
+        case 'Peanuts':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: '#AC9BD5' }]}>
+                <MaterialCommunityIcons name="peanut-outline" size={16} color="black" />
+              </View>
+          );
+        case 'Tree Nuts':
+          return (
+            <View style={[styles.allergenIcon, { backgroundColor: '#F7B27D' }]}>
+                <Text style={styles.allergenText}>nut</Text>
+              </View>
+          );
+        // Add cases for other allergens and their corresponding icons
+        default:
+          return null; // Render nothing if the allergen doesn't have a corresponding icon
+      }
+    });
+  };
+
 
   // console.log(recipeInfo.servings)
   return (
     <ScrollView>
         <View style={styles.imageContainer}>
-            <Image source={require('../assets/chickpeasalad.png')} style={styles.cardImage} />
+            <Image source={{uri: recipeInfo.imageUrl}} style={styles.cardImage} />
             <TouchableOpacity style={styles.iconContainerLeft}>
             <Ionicons name="chevron-back-outline" size={24} color="#FFF" />
             </TouchableOpacity>
@@ -58,8 +130,8 @@ const RecipeInfo = ({ route }) => {
         </View>
         <View style={styles.cardContent}>
           <Text style={styles.recipeName}>{recipeInfo.title}</Text>
-          <View style={styles.allergenIcon}>
-            <FontAwesome6 name="wheat-awn" size={16} color="black" />
+          <View style={styles.allergenIconContainer}>
+            {renderAllergenIcons()}
           </View>
           <View style={styles.recipeInfoRow}>
             <Ionicons name="time-outline" size={16} style={styles.icon}></Ionicons>

@@ -19,7 +19,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const RecipeCard = ({recipe, onPress, currentPage}) => {
     // console.log("recipe card rendering")
     let allergens = recipe.allergens;
-    console.log(allergens)
+    // console.log(allergens)
 
     const renderAllergenIcons = () => {
       return allergens.map((allergen) => {
