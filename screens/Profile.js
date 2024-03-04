@@ -8,7 +8,7 @@ Image,
 TouchableOpacity,
 Pressable
 } from "react-native";
-import EditProfile from "./screens/EditProfile";
+// import EditProfile from "./screens/EditProfile";
 import { Color } from "../GlobalStyles";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
