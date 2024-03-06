@@ -26,8 +26,7 @@ const styles = StyleSheet.create({
       width: '50%',
       height: '50%',
       padding: '2%',
-      backgroundColor: '#D9D9D9',
-      borderRadius: '10%'
+      backgroundColor: '#D9D9D9'
     },
     EBLogo: {
       width: '20%',

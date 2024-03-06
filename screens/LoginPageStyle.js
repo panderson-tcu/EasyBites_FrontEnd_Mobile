@@ -2,122 +2,74 @@ import { StyleSheet } from 'react-native';
 import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
 const styles = StyleSheet.create({
-    loginLayout: {
-      height: '5%',
-      width: '65%',
-      top: '60%',
-      left: '18%',
-      borderRadius: 15,
-      position: "absolute",
-      backgroundColor: '#D9D9D9'
-    },
-    userLoginLayout: {
-      height: '5%',
-      width: '65%',
-      top: '52%',
-      left: '18%',
-      borderRadius: 15,
-      position: "absolute",
-      backgroundColor: '#D9D9D9'
-    },
-    textTypo: {
-      textAlign: "center",
-      fontSize: FontSize.size_xs,
-      fontFamily: FontFamily.Arial,
-      fontWeight: "700",
-    },
-    logInTitleFlexBox: {
-      justifyContent: "center",
-      alignItems: "center",
-      position: "absolute",
-      width: '100%',
-    },
-    loginPageChild: {
-      top: '100%',
-    },
-    // username: {
-    //   top: '30%',
-    //   color: Color.colorGray_200,
-    //   left: 75,
-    //   textAlign: "left",
-    //   fontSize: FontSize.size_xs,
-    //   position: "absolute",
-    // },
-    // password: {
-    //   top: '45%',
-    //   color: Color.colorGray_200,
-    //   left: 75,
-    //   textAlign: "left",
-    //   fontSize: FontSize.size_xs,
-    //   position: "absolute",
-    //   backgroundColor: "black",
-    // },
-    dontHaveAn: {
-      color: Color.colorBlack,
-    },
-    signUp: {
-      color: Color.colorIndigo,
-    },
-    text: {
-      width: 155,
-      textAlign: "left",
-      fontSize: FontSize.size_xs,
-    },
-    dontHaveAnContainer: {
-      left: '33%',
-      top: '76%',
-      position: "absolute",
-    },
-    login: {
-      color: Color.colorBlack,
-      textAlign: "left",
-      fontSize: FontSize.size_xs,
-    },
-    loginButton: {
-      top: '70%',
-      marginHorizontal: '16.8%',
-      backgroundColor: Color.colorSandybrown,
-      flexDirection: "row",
-      // paddingHorizontal: '1%',
-      paddingVertical: Padding.p_5xs,
-      alignItems: "center",
-      borderRadius: Border.br_3xs,
-      overflow: "hidden",
-      maxWidth: '60%',
-    },
-    logInTitle: {
-      top: '38%',
-      // left: '15%',
-      fontSize: FontSize.size_26xl,
-      color: Color.colorGray_100,
-      textAlign: "center",
-      display: "flex",
-      width: '100%',
-      height: 98,
-      fontFamily: FontFamily.Arial,
-      fontWeight: "700",
-      alignItems: "center",
-    },
-    EBIcon: {
-      top: "17%",
-      left: "26%",
-      width: 195,
-      height: 173,
-      position: "relative",
-    },
-    loginPage: {
-      backgroundColor: "#f2f1ed",
-      flex: 1,
-      width: "100%",
-      height: '100%',
-      overflow: "hidden",
-    },
-    usernameInput: {
-      paddingLeft: '10%',    
-    },
-    passwordInput: {
-      paddingLeft: '10%',    
-    }
-  });
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: "#f2f1ed",
+    width: '100%',
+    height: '100%',
+    overflow: "hidden",
+  },
+  logo: {
+    top: '10%',
+    width: 195,
+    height: 173,
+    marginBottom: 20,
+},
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: Color.colorGray_100,
+    textAlign: "center",
+    fontFamily: FontFamily.Arial,
+    fontWeight: "700",
+    alignItems: "center",
+    fontSize: FontSize.size_26xl,
+  },
+  formContainer: {
+    width: '73%',
+    // paddingRight: 120,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    marginVertical: 10,
+    paddingLeft: 25,
+    paddingHorizontal: 10,
+    borderColor: 'gray',
+    borderWidth: 0,
+    borderRadius: 10,
+    backgroundColor: '#D9D9D9'
+  },
+  button: {
+    backgroundColor: '#007bff',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 30,
+    backgroundColor: Color.colorSandybrown,
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontFamily: FontFamily.Arial,
+  },
+  haveAnAccount: {
+    color: Color.colorBlack,
+    fontWeight: 'bold',
+  },
+  login: {
+    color: Color.colorIndigo,
+  },
+  haveAnAccountContainer: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
 
-  export default styles;
+});
+
+export default styles;
+

@@ -7,30 +7,38 @@ import {
   View,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
+  TextInput,
+  Image
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import RecipeCard from "../components/RecipeCard";
 import styles from "./HomeStyle";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import axios from 'axios';
 
 const Home = () => {
   const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    axios.get("http://localhost/recipes/approved")
-      .then(response => {
-        setRecipes(response.data.data);
-      })
-      .catch(error => {
-        console.error("Error fetching recipes:", error);
-      })
-  }, []);
+  console.log("entering Home page")
+  // useEffect(() => {
+  //   console.log("retrieving all recipes from backend")
+  //   // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
+  //   axios.get("http:/localhost/recipes/approved")
+  //     .then(response => {
+  //       setRecipes(response.data.data);
+  //     })
+  //     .catch(error => {
+  //       console.error("Error fetching recipes:", error);
+  //     })
+  // }, []);
 
   const allRecipes = [
         {
-            recipeId: 207,
+            recipeId: 3,
             title: "Taco Bowl",
             cooktime: 35,
             imageUrl: "https://easybitesblobstorage.blob.core.windows.net/recipephotos/207-taco-bowl.png",
@@ -338,12 +346,35 @@ const Home = () => {
         }
     ]
 
+    const handleSearch = (query) => {
+      setSearchQuery(query);
+    };
+    const filteredRecipes = allRecipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
   return (
     <SafeAreaView style={styles.home}>
+      <View style={styles.headerWrap}>
+        <Image
+          style={styles.EBLogo}
+          source={require("../assets/Small-EB-Logo.png")}/>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search"
+          mode="outlined"
+          theme={{
+            fonts: { regular: { fontFamily: "Arial", fontWeight: "Bold" } },
+            colors: { text: "#000", background: "#f2f1ed" }
+          }} 
+          onChangeText={handleSearch}
+          />
+          <Ionicons name="filter-outline" size={24} style={styles.filterIcon}></Ionicons>
+      </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>
-          {allRecipes.map((recipe) => (
-                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeDetail', { recipe })}>
+          {filteredRecipes.map((recipe) => (
+                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'}>
                         </RecipeCard>
                     ))}
         </View>
