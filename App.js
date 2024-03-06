@@ -19,7 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 // Clerk imports
 import { SafeAreaView, Text, StyleSheet } from "react-native";
-import { ClerkProvider } from "@clerk/clerk-expo";
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import Constants from "expo-constants"
 
 
@@ -41,6 +41,7 @@ const screenOptions = {
                     padding: 10
                 }
 };
+
 
 
 function MyTabs() {
@@ -91,70 +92,32 @@ function MyTabs() {
 
 }
 
+
 function App () {
   return ( 
     <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="LoginPage"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen
-            name="LoginPage"
-            component={LoginPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="SignUpCreateAccount"
-            component={SignUpCreateAccount}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Quiz"
-            component={Quiz}
-            options={{ headerShown: false}}
-          />
-          <Stack.Screen
-            name="Quiz1"
-            component={Quiz1}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={MyTabs}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="RecipeInfo"
-            component={RecipeInfo}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SignedOut>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
+            <Stack.Screen name="SignUpCreateAccount" component={SignUpCreateAccount} options={{ headerShown: false }}/>
+            <Stack.Screen name="Quiz" component={Quiz} options={{ headerShown: false}} />
+            <Stack.Screen name="Quiz1" component={Quiz1} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SignedOut>
+
+      <SignedIn>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+            <Stack.Screen name="RecipeInfo" component={RecipeInfo} options={{ headerShown: false }}/>
+            </Stack.Navigator>
+          </NavigationContainer>
+      </SignedIn>
     </ClerkProvider>
   );
 };
-
-// Default expo App function
-// export default function App() {
-//   return (
-//     <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
-//       <SafeAreaView style={styles.container}>
-//         <Text>Hello world!</Text>
-//       </SafeAreaView>
-//     </ClerkProvider>
-//   );
-// }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default App;
 
