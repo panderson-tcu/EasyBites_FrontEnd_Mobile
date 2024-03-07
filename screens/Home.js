@@ -24,17 +24,17 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   console.log("entering Home page")
-  // useEffect(() => {
-  //   console.log("retrieving all recipes from backend")
-  //   // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
-  //   axios.get("http:/localhost/recipes/approved")
-  //     .then(response => {
-  //       setRecipes(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching recipes:", error);
-  //     })
-  // }, []);
+  useEffect(() => {
+    console.log("retrieving all recipes from backend")
+    // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
+    axios.get("http:/localhost/recipes/approved")
+      .then(response => {
+        setRecipes(response.data.data);
+      })
+      .catch(error => {
+        console.error("Error fetching recipes:", error);
+      })
+  }, []);
 
   const allRecipes = [
         {
@@ -349,7 +349,7 @@ const Home = () => {
     const handleSearch = (query) => {
       setSearchQuery(query);
     };
-    const filteredRecipes = allRecipes.filter((recipe) =>
+    const filteredRecipes = recipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
