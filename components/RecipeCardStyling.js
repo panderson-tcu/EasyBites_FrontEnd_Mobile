@@ -56,8 +56,11 @@ const styles = StyleSheet.create({
     allergenIcon: {
       backgroundColor: '#F7B27D',
       alignSelf: 'flex-end',
-      padding: '3%',
+      padding: '4%',
       borderRadius: 15,
+    },
+    allergenText: {
+      fontSize: 10,
     }
   });
 

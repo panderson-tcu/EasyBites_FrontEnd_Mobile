@@ -27,17 +27,17 @@ const Home = () => {
   const [appliedFilters, setAppliedFilters] = useState(null);
 
   console.log("entering Home page")
-  // useEffect(() => {
-  //   console.log("retrieving all recipes from backend")
-  //   // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
-  //   axios.get("http:/localhost/recipes/approved")
-  //     .then(response => {
-  //       setRecipes(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching recipes:", error);
-  //     })
-  // }, []);
+  useEffect(() => {
+    console.log("retrieving all recipes from backend")
+    // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
+    axios.get("http:/localhost/recipes/approved")
+      .then(response => {
+        setRecipes(response.data.data);
+      })
+      .catch(error => {
+        console.error("Error fetching recipes:", error);
+      })
+  }, []);
 
   const allRecipes = [
         {
