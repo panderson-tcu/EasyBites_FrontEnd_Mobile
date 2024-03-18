@@ -35,7 +35,8 @@ import styles from './SignUpCreateAccountStyle';
       // change the UI to our pending section.
       setPendingVerification(true);
     } catch (err) {
-      console.error(JSON.stringify(err, null, 2));
+      // console.error(JSON.stringify(err, null, 2));
+      alert(err.errors[0].longMessage);
     }
   };
  
@@ -52,7 +53,9 @@ import styles from './SignUpCreateAccountStyle';
  
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err) {
-      console.error(JSON.stringify(err, null, 2));
+      // console.error(JSON.stringify(err, null, 2));
+      alert(err.errors[0].longMessage);
+
     }
   };
  
