@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, Text, TextInput, Image, Pressable, TouchableOpacity, View } from "react-native";
-import { useSignIn } from "@clerk/clerk-expo";
+import { useSignIn, useAuth } from "@clerk/clerk-expo";
+import { Session } from '@clerk/clerk-react';
 import styles from './LoginPageStyle';
 
  
@@ -10,6 +11,7 @@ const LoginPage = ({ navigation }) => {
  
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { userId, sessionId, getToken } = useAuth();
  
   const onSignInPress = async () => {
     if (!isLoaded) {
@@ -26,6 +28,15 @@ const LoginPage = ({ navigation }) => {
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err) {
       console.log(err);
+      alert(err.errors[0].message);
+    }
+
+    try {
+      const tokenObject = await Clerk.session.getToken({ template: 'springBootJWT' }) // => "eyJhbGciOiJSUzI1NiIsImtpZC..."
+      const tokenString = JSON.stringify(tokenObject, null, 2); // Print the object as a JSON string with indentation
+      console.log(tokenString);
+    } catch(e) {
+        console.log(e);
     }
   };
   return (
