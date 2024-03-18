@@ -14,6 +14,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import RecipeCard from "../components/RecipeCard";
+import FilterPopup from '../components/FilterPopup';
 import styles from "./HomeStyle";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import axios from 'axios';
@@ -22,6 +23,8 @@ const Home = () => {
   const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterVisible, setFilterVisible] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState(null);
 
   console.log("entering Home page")
   // useEffect(() => {
@@ -346,12 +349,33 @@ const Home = () => {
         }
     ]
 
-    const handleSearch = (query) => {
-      setSearchQuery(query);
+    // const handleSearch = (query) => {
+    //   setSearchQuery(query);
+    // };
+    // const filteredRecipes = allRecipes.filter((recipe) =>
+    //   recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
+
+    const filteredRecipes = recipes.filter(recipe => {
+      // Apply search query filter
+      const includesSearchQuery = recipe.title.toLowerCase().includes(searchQuery.toLowerCase());
+  
+      // Apply additional filters if appliedFilters exist
+      if (appliedFilters) {
+        const { maxPrice, maxCookTime, selectedProtein } = appliedFilters;
+        const meetsPriceCriteria = recipe.estimatedCost <= maxPrice || maxPrice === '';
+        const meetsCookTimeCriteria = recipe.cooktime <= maxCookTime || maxCookTime === '';
+        const meetsProteinCriteria = selectedProtein === '' || recipe.protein.proteinName === selectedProtein;
+        return includesSearchQuery && meetsPriceCriteria && meetsCookTimeCriteria && meetsProteinCriteria;
+      }
+  
+      return includesSearchQuery;
+    });
+  
+    const handleApplyFilters = (filters) => {
+      setAppliedFilters(filters);
+      setFilterVisible(false);
     };
-    const filteredRecipes = allRecipes.filter((recipe) =>
-      recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
   return (
     <SafeAreaView style={styles.home}>
@@ -367,9 +391,9 @@ const Home = () => {
             fonts: { regular: { fontFamily: "Arial", fontWeight: "Bold" } },
             colors: { text: "#000", background: "#f2f1ed" }
           }} 
-          onChangeText={handleSearch}
+          onChangeText={setSearchQuery}
           />
-          <Ionicons name="filter-outline" size={24} style={styles.filterIcon}></Ionicons>
+        <Ionicons name="filter-outline" size={24} style={styles.filterIcon} onPress={() => setFilterVisible(true)} />        
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>
@@ -379,6 +403,7 @@ const Home = () => {
                     ))}
         </View>
       </ScrollView>
+      <FilterPopup visible={filterVisible} onClose={() => setFilterVisible(false)} onApply={handleApplyFilters} />
     </SafeAreaView>
   );
 };
