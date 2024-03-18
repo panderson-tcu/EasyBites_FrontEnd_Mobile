@@ -18,13 +18,19 @@ import FilterPopup from '../components/FilterPopup';
 import styles from "./HomeStyle";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import axios from 'axios';
+import { useAuth } from "@clerk/clerk-expo";
+
 
 const Home = () => {
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
   const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(null);
+
+  console.log(`Hello, ${userId} your current active session is ${sessionId}`)
+  const session = clerkClient.sessions.getToken(sessionId, template);
 
   console.log("entering Home page")
   useEffect(() => {

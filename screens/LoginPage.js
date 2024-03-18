@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import { SafeAreaView, Text, TextInput, Image, Pressable, TouchableOpacity, View } from "react-native";
 import { useSignIn, useAuth } from "@clerk/clerk-expo";
 import { Session } from '@clerk/clerk-react';
 import styles from './LoginPageStyle';
+import axios from 'axios';
 
  
 const LoginPage = ({ navigation }) => {
 
   const { signIn, setActive, isLoaded } = useSignIn();
+  // const { isLoaded, userId, sessionId, getToken } = useAuth();
+
  
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -25,6 +28,10 @@ const LoginPage = ({ navigation }) => {
       });
       // This is an important step,
       // This indicates the user is signed in
+      // console.log('Complete Sign in:', completeSignIn);
+
+      // console.log('Session ID:', sessionId);
+
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err) {
       console.log(err);
@@ -39,6 +46,8 @@ const LoginPage = ({ navigation }) => {
         console.log(e);
     }
   };
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
