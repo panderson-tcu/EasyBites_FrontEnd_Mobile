@@ -29,8 +29,8 @@ const Home = () => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(null);
 
-  console.log(`Hello, ${userId} your current active session is ${sessionId}`)
-  const session = clerkClient.sessions.getToken(sessionId, template);
+  // console.log(`Hello, ${userId} your current active session is ${sessionId}`)
+  // const session = clerkClient.sessions.getToken(sessionId, template);
 
   console.log("entering Home page")
   useEffect(() => {
