@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 25,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
     textAlign: 'center',
     color: '#9B8E73',
     marginBottom: 20,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   proteinButton: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 20,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     marginTop: 10,
   },
   cancelButton: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   applyButton: {
-    backgroundColor: '#9B8E73',
+    backgroundColor: '#7B886B',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -77,6 +77,29 @@ const styles = StyleSheet.create({
   },
   applyButtonText: {
     color: '#fff',
+  },
+  pickerContainer: {
+    marginBottom: 15,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  pickerStyles: {
+    color: '#000',
+    fontSize: 16,
+  },
+  resetButton: {
+    backgroundColor: '#9B8E73',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  resetButtonText: {
+    color: '#000',
   },
 });
 export default styles;

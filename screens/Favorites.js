@@ -11,7 +11,7 @@ Image
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import RecipeCard from "../components/RecipeCard";
-import styles from "./HomeStyle";
+import styles from "./FavoritesStyle";
 import axios from 'axios';
 
 
@@ -357,8 +357,8 @@ const Favorites = () => {
           style={styles.EBLogo}
           source={require("../assets/Small-EB-Logo.png")}/>
         <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
+          style={styles.searchInputFavs}
+          placeholder= "Search"
           mode="outlined"
           theme={{
             fonts: { regular: { fontFamily: "Arial", fontWeight: "Bold" } },
@@ -366,7 +366,6 @@ const Favorites = () => {
           }} 
           onChangeText={handleSearch}
           />
-          <Ionicons name="filter-outline" size={24} style={styles.filterIcon}></Ionicons>
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>

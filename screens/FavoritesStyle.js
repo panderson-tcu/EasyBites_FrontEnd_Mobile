@@ -14,19 +14,22 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       flexWrap: 'wrap', // Allow wrapping of cards to the next line
       justifyContent: 'center', // Center the cards horizontally
-  
+      paddingBottom: '24%',
+
     },
     card: {
     },
     scrollViewcontent: {
       flexGrow: 1,
+      marginBottom: '30%',
     },
-    searchInput: {
+    searchInputFavs: {
       top: '5%',
-      width: '50%',
+      width: '65%',
       height: '50%',
       padding: '2%',
-      backgroundColor: '#D9D9D9'
+      backgroundColor: '#D9D9D9',
+      borderRadius: 10,
     },
     EBLogo: {
       width: '20%',
