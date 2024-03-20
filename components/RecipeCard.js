@@ -80,33 +80,30 @@ const RecipeCard = ({recipe, onPress, currentPage}) => {
     };
 
 
-
     return (
       <TouchableOpacity onPress={onPress} style={styles.cardView}>
-        {/* <View style={styles.cardView}> */}
-        {/* <View> */}
           <Card containerStyle={styles.cardComponent}>
             <View style={styles.cardImageContainer}>
+            <View style={styles.timeContainer}>
                 <View style={styles.actionIcon}>
                 {currentPage === 'Home' && <Ionicons name="heart-outline" size={24}/>}
                 {currentPage === 'Favorites' && <Ionicons name="add-circle-outline" size={24}/>}
                 </View>
               <Card.Image style={styles.cardImage}source={{uri: recipe.imageUrl}} />
-
-            </View>
-              <View style={styles.cardContent}>
+              <View style={styles.detailContainer}>
               <Text style={styles.recipeName}>{recipe.title}</Text>
-              <Text style={styles.recipePrice}>${recipe.estimatedCost}</Text>
-              <View style={styles.timeContainer}>
-                <Ionicons name="time-outline" size={16}></Ionicons>
-                <Text style={styles.recipeTime}>{recipe.cooktime} minutes</Text>
-                <View style={styles.allergenIconsContainer}>
-                  {renderAllergenIcons()}
+                <Text style={styles.recipePrice}>${parseFloat(recipe.estimatedCost).toFixed(2)}</Text>
+                <View style={styles.timeContainer}>
+                  <Ionicons name="time-outline" size={20}/>
+                  <Text style={styles.recipeTime}>{recipe.cooktime} mins</Text>
                 </View>
-              </View>
+              <View style={styles.allergenIconsContainer}>
+                  {renderAllergenIcons()}
+                </View> 
+                </View>
+                </View> 
             </View>
           </Card>
-        {/* </View> */}
       </TouchableOpacity>
       
     );
