@@ -363,17 +363,18 @@ const Home = () => {
     // );
 
     const filteredRecipes = recipes.filter(recipe => {
-      // Apply search query filter
       const includesSearchQuery = recipe.title.toLowerCase().includes(searchQuery.toLowerCase());
   
-      // Apply additional filters if appliedFilters exist
+    
       if (appliedFilters) {
-        const { maxPrice, maxCookTime, selectedProtein } = appliedFilters;
-        const meetsPriceCriteria = recipe.estimatedCost <= maxPrice || maxPrice === '';
-        const meetsCookTimeCriteria = recipe.cooktime <= maxCookTime || maxCookTime === '';
-        const meetsProteinCriteria = selectedProtein === '' || recipe.protein.proteinName === selectedProtein;
+        const { maxPrice, maxCookTime, selectedProteins } = appliedFilters;
+        const meetsPriceCriteria = !maxPrice || parseFloat(recipe.estimatedCost) <= maxPrice;
+        const meetsCookTimeCriteria = !maxCookTime || recipe.cooktime <= maxCookTime;
+        const meetsProteinCriteria = selectedProteins.length === 0 || selectedProteins.includes(recipe.protein.proteinName);
         return includesSearchQuery && meetsPriceCriteria && meetsCookTimeCriteria && meetsProteinCriteria;
       }
+
+      
   
       return includesSearchQuery;
     });
@@ -382,7 +383,7 @@ const Home = () => {
       setAppliedFilters(filters);
       setFilterVisible(false);
     };
-
+    
   return (
     <SafeAreaView style={styles.home}>
       <View style={styles.headerWrap}>

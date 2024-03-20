@@ -1,18 +1,155 @@
+// import React, { useState } from 'react';
+// import { Modal, View, Text, Pressable, ScrollView } from 'react-native';
+// import styles from "./FilterPopupStyle";
+// import RNPickerSelect from 'react-native-picker-select';
+
+// const FilterPopup = ({ visible, onClose, onApply }) => {
+//   const [maxPrice, setMaxPrice] = useState('');
+//   const [maxCookTime, setMaxCookTime] = useState('');
+//   const [selectedProteins, setSelectedProteins] = useState([]);
+
+//   const toggleProtein = (protein) => {
+//     const updatedProteins = selectedProteins.includes(protein)
+//       ? selectedProteins.filter(p => p !== protein)
+//       : [...selectedProteins, protein];
+//     setSelectedProteins(updatedProteins);
+//   };
+
+//   const handleApply = () => {
+//     // Filters object to be passed to the onApply callback
+//     const filters = {
+//       maxPrice: parseFloat(maxPrice),
+//       maxCookTime: parseInt(maxCookTime),
+//       selectedProteins
+//     };
+//     // Pass the filters to the onApply callback
+//     onApply(filters);
+//   };
+
+//   const handleReset = () => {
+//     setMaxPrice('');
+//     setMaxCookTime('');
+//     setSelectedProteins([]);
+//     onApply(null); // Pass null to indicate that no filters are applied
+//   };
+  
+//   const renderProteinButtons = () => {
+//     return ['Chicken', 'Beef', 'Pork', 'Turkey', 'Vegetarian', 'Seafood'].map(protein => (
+//       <Pressable
+//         key={protein}
+//         style={[styles.proteinButton, selectedProteins.includes(protein) && styles.selectedProteinButton]}
+//         onPress={() => toggleProtein(protein)}
+//       >
+//         <Text style={[styles.proteinButtonText, selectedProteins.includes(protein)]}>
+//           {protein}
+//         </Text>
+//       </Pressable>
+//     ));
+//   };
+
+//   return (
+//     <Modal
+//       animationType="slide"
+//       transparent={true}
+//       visible={visible}
+//       onRequestClose={onClose}
+//     >
+//       <View style={styles.modalContainer}>
+//         <View style={styles.modalContent}>
+//           <Text style={styles.modalTitle}>Filter Recipes</Text>
+//           <View style={styles.pickerContainer}>
+//             <Text style={styles.sectionTitle}>Max Price</Text>
+//             <RNPickerSelect
+//               style={styles.pickerStyles}
+//               value={maxPrice}
+//               onValueChange={(itemValue, itemIndex) => setMaxPrice(itemValue)}
+//               items={[
+//                 { label: '$5', value: '5' },
+//                 { label: '$10', value: '10' },
+//                 { label: '$15', value: '15' },
+//               ]}
+//             />
+//           </View>
+//           <View style={styles.pickerContainer}>
+//             <Text style={styles.sectionTitle}>Cook Time</Text>
+//             <RNPickerSelect
+//               value={maxCookTime}
+//               style={styles.pickerStyles}
+//               onValueChange={(itemValue, itemIndex) => setMaxCookTime(itemValue)}
+//               items={[
+//                 { label: '5 Minutes', value: '5' },
+//                 { label: '10 Minutes', value: '10' },
+//                 { label: '15 Minutes', value: '15' },
+//                 { label: '20 Minutes', value: '20' },
+//                 { label: '25 Minutes', value: '25' },
+//                 { label: '30 Minutes', value: '30' },
+//                 { label: '35 Minutes', value: '35' },
+//                 { label: '40 Minutes', value: '40' },
+//                 { label: '45 Minutes', value: '45' },
+//                 { label: '50 Minutes', value: '50' },
+//                 { label: '1 Hour or more', value: '60' },
+
+
+//               ]}
+//             />
+//           </View>
+//           <Text style={styles.sectionTitle}>Select Protein(s)</Text>
+//           <ScrollView style={styles.proteinContainer}>
+//             {renderProteinButtons()}
+//           </ScrollView>
+//           <View style={styles.buttonContainer}>
+//             <Pressable onPress={onClose} style={styles.cancelButton}>
+//               <Text style={styles.buttonText}>Cancel</Text>
+//             </Pressable>
+//             <Pressable onPress={handleReset} style={styles.resetButton}>
+//               <Text style={[styles.buttonText, styles.resetButtonText]}>Reset</Text>
+//             </Pressable>
+//             <Pressable onPress={handleApply} style={styles.applyButton}>
+//               <Text style={[styles.buttonText, styles.applyButtonText]}>Apply</Text>
+//             </Pressable>
+//           </View>
+//         </View>
+//       </View>
+//     </Modal>
+//   );
+// };
+
+// export default FilterPopup;
+
 import React, { useState } from 'react';
-import { Modal, View, Text, Pressable, TextInput, ScrollView, StyleSheet } from 'react-native';
+import { Modal, View, Text, Pressable, ScrollView } from 'react-native';
 import styles from "./FilterPopupStyle";
+import RNPickerSelect from 'react-native-picker-select';
 
 const FilterPopup = ({ visible, onClose, onApply }) => {
   const [maxPrice, setMaxPrice] = useState('');
   const [maxCookTime, setMaxCookTime] = useState('');
   const [selectedProteins, setSelectedProteins] = useState([]);
-
+  
   const toggleProtein = (protein) => {
     const updatedProteins = selectedProteins.includes(protein)
       ? selectedProteins.filter(p => p !== protein)
       : [...selectedProteins, protein];
     setSelectedProteins(updatedProteins);
   };
+
+  const handleApply = () => {
+    const filters = {};
+    if (maxPrice !== '') filters.maxPrice = parseFloat(maxPrice);
+    if (maxCookTime !== '') filters.maxCookTime = parseInt(maxCookTime);
+    if (selectedProteins.length > 0) filters.selectedProteins = selectedProteins;
+    onApply(filters);
+    console.log(filters)
+  };
+
+
+  const handleReset = () => {
+    setMaxPrice('');
+    setMaxCookTime('');
+    setSelectedProteins([]);
+    onApply(null);
+  };
+  
 
   const renderProteinButtons = () => {
     return ['Chicken', 'Beef', 'Pork', 'Turkey', 'Vegetarian', 'Seafood'].map(protein => (
@@ -28,15 +165,6 @@ const FilterPopup = ({ visible, onClose, onApply }) => {
     ));
   };
 
-  const handleApply = () => {
-    const filters = {
-      maxPrice: parseFloat(maxPrice),
-      maxCookTime: parseInt(maxCookTime),
-      selectedProteins
-    };
-    onApply(filters);
-  };
-
   return (
     <Modal
       animationType="slide"
@@ -47,22 +175,41 @@ const FilterPopup = ({ visible, onClose, onApply }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Filter Recipes</Text>
-          <Text style={styles.sectionTitle}>Set a Max Price</Text>
-          <TextInput
-            placeholder="Max Price"
-            keyboardType="numeric"
-            style={styles.inputField}
-            value={maxPrice}
-            onChangeText={setMaxPrice}
-          />
-          <Text style={styles.sectionTitle}>Set max Cook Time</Text>
-          <TextInput
-            placeholder="Max Cook Time (minutes)"
-            keyboardType="numeric"
-            style={styles.inputField}
-            value={maxCookTime}
-            onChangeText={setMaxCookTime}
-          />
+          <View style={styles.pickerContainer}>
+            <Text style={styles.sectionTitle}>Max Price</Text>
+            <RNPickerSelect
+              style={styles.pickerStyles}
+              value={maxPrice}
+              onValueChange={(itemValue, itemIndex) => setMaxPrice(itemValue)}
+              items={[
+                { label: '$5 or less', value: '5' },
+                { label: '$10 or less', value: '10' },
+                { label: '$15 or less', value: '15' },
+                { label: '$20', value: '20' },
+              ]}
+            />
+          </View>
+          <View style={styles.pickerContainer}>
+            <Text style={styles.sectionTitle}>Cook Time</Text>
+            <RNPickerSelect
+              value={maxCookTime}
+              style={styles.pickerStyles}
+              onValueChange={(itemValue, itemIndex) => setMaxCookTime(itemValue)}
+              items={[
+                { label: '5 Minutes', value: '5' },
+                { label: '10 Minutes', value: '10' },
+                { label: '15 Minutes', value: '15' },
+                { label: '20 Minutes', value: '20' },
+                { label: '25 Minutes', value: '25' },
+                { label: '30 Minutes', value: '30' },
+                { label: '35 Minutes', value: '35' },
+                { label: '40 Minutes', value: '40' },
+                { label: '45 Minutes', value: '45' },
+                { label: '50 Minutes', value: '50' },
+                { label: '1 Hour or more', value: '60' },
+              ]}
+            />
+          </View>
           <Text style={styles.sectionTitle}>Select Protein(s)</Text>
           <ScrollView style={styles.proteinContainer}>
             {renderProteinButtons()}
@@ -70,6 +217,9 @@ const FilterPopup = ({ visible, onClose, onApply }) => {
           <View style={styles.buttonContainer}>
             <Pressable onPress={onClose} style={styles.cancelButton}>
               <Text style={styles.buttonText}>Cancel</Text>
+            </Pressable>
+            <Pressable onPress={handleReset} style={styles.resetButton}>
+              <Text style={[styles.buttonText, styles.resetButtonText]}>Reset</Text>
             </Pressable>
             <Pressable onPress={handleApply} style={styles.applyButton}>
               <Text style={[styles.buttonText, styles.applyButtonText]}>Apply</Text>
@@ -80,85 +230,5 @@ const FilterPopup = ({ visible, onClose, onApply }) => {
     </Modal>
   );
 };
-
-// const styles = StyleSheet.create({
-//   modalContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'rgba(0,0,0,0.5)',
-//   },
-//   modalContent: {
-//     backgroundColor: '#f2f1ed', 
-//     padding: 20,
-//     borderRadius: 10,
-//     width: '90%',
-//     height: '60%',
-//   },
-//   modalTitle: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     marginBottom: 10,
-//     textAlign: 'center',
-//     color: '#3E3A39',
-//     marginBottom: 20,
-//   },
-//   inputField: {
-//     marginBottom: 30,
-//     borderBottomWidth: 1,
-//     borderColor: '#ccc',
-//     paddingBottom: 5,
-//   },
-//   sectionTitle: {
-//     marginBottom: 5,
-//     fontWeight: 'bold',
-//     fontSize: 16,
-//   },
-//   proteinContainer: {
-//     maxHeight: "60%",
-//     marginBottom: 10,
-//   },
-//   proteinButton: {
-//     backgroundColor: '#D9D9D9',
-//     paddingVertical: 10,
-//     paddingHorizontal: 25,
-//     borderRadius: 20,
-//     marginRight: 10,
-//     marginBottom: 10,
-//   },
-//   selectedProteinButton: {
-//     backgroundColor: '#7B886B',
-//   },
-//   proteinButtonText: {
-//     color: '#000',
-//   },
-//   selectedProteinButtonText: {
-//     color: '#fff',
-//   },
-//   buttonContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end',
-//     marginTop: 10,
-//   },
-//   cancelButton: {
-//     backgroundColor: '#ddd',
-//     paddingVertical: 10,
-//     paddingHorizontal: 20,
-//     borderRadius: 5,
-//     marginRight: 10,
-//   },
-//   applyButton: {
-//     backgroundColor: '#7B886B',
-//     paddingVertical: 10,
-//     paddingHorizontal: 20,
-//     borderRadius: 5,
-//   },
-//   buttonText: {
-//     color: '#000',
-//   },
-//   applyButtonText: {
-//     color: '#fff',
-//   },
-// });
 
 export default FilterPopup;

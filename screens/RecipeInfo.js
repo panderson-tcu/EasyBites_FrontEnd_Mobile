@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, Pressable } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './RecipeInfoStyle'; // Import your styles
@@ -10,7 +11,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const RecipeInfo = ({ route }) => {
   console.log("In RecipeInfo stack screen")
   const {recipe} = route.params;
-  // let recipeInfo;
+  const navigation = useNavigation();
   const [recipeInfo, setRecipeInfo] = useState({
     title: '',
     cooktime: '',
@@ -116,12 +117,12 @@ const RecipeInfo = ({ route }) => {
     <ScrollView>
         <View style={styles.imageContainer}>
             <Image source={{uri: recipeInfo.imageUrl}} style={styles.cardImage} />
-            <TouchableOpacity style={styles.iconContainerLeft}>
-            <Ionicons name="chevron-back-outline" size={24} color="#FFF" />
-            </TouchableOpacity>
+            <Pressable style={styles.iconContainerLeft}>
+            <Ionicons name="chevron-back-outline" size={24} color="#FFF" onPress={() => navigation.navigate('Home')} currentPage={('RecipeInfo', { recipe })}/>
+            </Pressable>
             <View style={styles.iconContainerRight}>
             <TouchableOpacity style={styles.icon}>
-                <FontAwesome6 name="heart" size={24} color="#FFF" />
+                <FontAwesome6 name="heart" size={24} color="#FFF"/>
             </TouchableOpacity>
             <TouchableOpacity style={styles.icon}>
                 <Ionicons name="add-circle-outline" size={24} color="#FFF" />

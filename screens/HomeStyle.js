@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       flexWrap: 'wrap', // Allow wrapping of cards to the next line
       justifyContent: 'center', // Center the cards horizontally
-  
+      paddingBottom: '24%'
     },
     card: {
     },
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
       height: '50%',
       padding: '2%',
       backgroundColor: '#D9D9D9',
-      borderRadius: '10%'
+      borderRadius: 10,
     },
     EBLogo: {
       width: '20%',

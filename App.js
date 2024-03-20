@@ -32,12 +32,12 @@ const screenOptions = {
                 tabBarStyle: {
                     position: 'absolute',
                     elevation: 0,
-                    height: 70,
+                    height: '9%',
                     backgroundColor: '#7B886B',
                     shadowColor: '#EFEBE7',
                     shadowOpacity: 12,
                     shadowRadius: 10,
-                    paddingBottom: 10,
+                    paddingBottom: "6%",
                     padding: 10
                 }
 };
@@ -52,29 +52,42 @@ function MyTabs() {
             component={Home}
             options={{
                 tabBarIcon: ({focused}) => {
-                    return ( // ternary operator for focused! black focused, cream/white when not
-                    <Ionicons name="home-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
+                  return (
+                    focused ? (
+                        <Ionicons name="home" size={40} color="#EFEBE7" />
+                    ) : (
+                        <Ionicons name="home-outline" size={40} color="#EFEBE7" />
                     )
+                );
                 }
             }}  /> 
-        <Tab.Screen     
-            name="Favorites" 
-            component={Favorites}
-            options={{
-                tabBarIcon: ({focused}) => {
-                    return ( 
-                    <Ionicons name="heart-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
-                    )
-                }
-            }} />
+       <Tab.Screen     
+    name="Favorites" 
+    component={Favorites}
+    options={{
+        tabBarIcon: ({ focused }) => {
+            return (
+                focused ? (
+                    <Ionicons name="heart" size={40} color="#EFEBE7" />
+                ) : (
+                    <Ionicons name="heart-outline" size={40} color="#EFEBE7" />
+                )
+            );
+        }
+    }}
+/>
         <Tab.Screen 
             name="ShoppingCart" 
             component={ShoppingCart}
             options={{
                 tabBarIcon: ({focused}) => {
-                    return ( 
-                    <Ionicons name="cart-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
+                  return (
+                    focused ? (
+                        <Ionicons name="cart" size={40} color="#EFEBE7" />
+                    ) : (
+                        <Ionicons name="cart-outline" size={40} color="#EFEBE7" />
                     )
+                );
                 }
             }} />
         <Tab.Screen 
@@ -82,9 +95,13 @@ function MyTabs() {
             component={Profile}
             options={{
                 tabBarIcon: ({focused}) => {
-                    return ( 
-                    <Ionicons name="person-circle-outline" size={40} color={focused ? "#000000": "#EFEBE7"} />
+                  return (
+                    focused ? (
+                        <Ionicons name="person-circle" size={40} color="#EFEBE7" />
+                    ) : (
+                        <Ionicons name="person-circle-outline" size={40} color="#EFEBE7" />
                     )
+                );
                 }
             }} />
       </Tab.Navigator>
