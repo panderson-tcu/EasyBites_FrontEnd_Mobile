@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SafeAreaView, TextInput, TouchableOpacity, Text, View, Image, StyleSheet, Pressable } from 'react-native';
-import { useSignUp } from "@clerk/clerk-expo";
+import { useSignUp, useUser } from "@clerk/clerk-expo";
 import styles from './SignUpCreateAccountStyle';
 
  
@@ -14,6 +14,13 @@ import styles from './SignUpCreateAccountStyle';
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
+  const {user} = useUser();
+  const [appUserInfo, setAppUserInfo] = React.useState({ //might need to change name of these json variables
+    userId: '',
+    email: '',
+    firstName: '',
+    lastName: ''
+  })
  
   // start the sign up process.
   const onSignUpPress = async () => {
@@ -50,13 +57,43 @@ import styles from './SignUpCreateAccountStyle';
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
- 
       await setActive({ session: completeSignUp.createdSessionId });
-    } catch (err) {
-      // console.error(JSON.stringify(err, null, 2));
-      alert(err.errors[0].longMessage);
 
+      // setAppUserInfo({
+      //   userId: user.id,
+      //   email: emailAddress,
+      //   firstName: firstName,
+      //   lastName: lastName
+      // })
+
+      // console.log(appUserInfo);
+
+    //   await axios.post("http://localhost/app-user", appUserInfo,     
+    //   // await axios.post("https://easybites-portal.azurewebsites.net/app-user",
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       }
+    //     } 
+    //   )
+    //   .then(response => {
+    //     if(response.status==200){
+    //       console.log('User added successfully!');
+    //     }
+    //     else {
+    //       console.error(
+    //         'Failed to add user: ',
+    //         response.status,
+    //         response.statusText
+    //       );
+    //     }
+    //   })
+    } catch (err) {
+      alert(err.errors[0].longMessage);
     }
+
+    console.log("hello");
+    console.log(user?.id);
   };
  
   return (
