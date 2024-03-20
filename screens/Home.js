@@ -29,21 +29,30 @@ const Home = () => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(null);
 
-  // console.log(`Hello, ${userId} your current active session is ${sessionId}`)
-  // const session = clerkClient.sessions.getToken(sessionId, template);
-
-  console.log("entering Home page")
   useEffect(() => {
-    console.log("retrieving all recipes from backend")
-    // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
-    axios.get("http:/localhost/recipes/approved")
-      .then(response => {
-        setRecipes(response.data.data);
-      })
-      .catch(error => {
+    const fetchData = async () => {
+      try {
+        const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+        console.log(token)
+        await axios.get("http://localhost/recipes/approved",        
+        // await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          } 
+        )
+        .then(response => {
+          setRecipes(response.data.data);
+        })
+      } catch (error) {
         console.error("Error fetching recipes:", error);
-      })
+      }
+    };
+  
+    fetchData();
   }, []);
+  
 
   const allRecipes = [
         {
