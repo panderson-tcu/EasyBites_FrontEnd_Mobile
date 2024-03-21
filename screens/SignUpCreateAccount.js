@@ -58,42 +58,9 @@ import styles from './SignUpCreateAccountStyle';
         code,
       });
       await setActive({ session: completeSignUp.createdSessionId });
-
-      // setAppUserInfo({
-      //   userId: user.id,
-      //   email: emailAddress,
-      //   firstName: firstName,
-      //   lastName: lastName
-      // })
-
-      // console.log(appUserInfo);
-
-    //   await axios.post("http://localhost/app-user", appUserInfo,     
-    //   // await axios.post("https://easybites-portal.azurewebsites.net/app-user",
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       }
-    //     } 
-    //   )
-    //   .then(response => {
-    //     if(response.status==200){
-    //       console.log('User added successfully!');
-    //     }
-    //     else {
-    //       console.error(
-    //         'Failed to add user: ',
-    //         response.status,
-    //         response.statusText
-    //       );
-    //     }
-    //   })
     } catch (err) {
       alert(err.errors[0].longMessage);
     }
-
-    console.log("hello");
-    console.log(user?.id);
   };
  
   return (
