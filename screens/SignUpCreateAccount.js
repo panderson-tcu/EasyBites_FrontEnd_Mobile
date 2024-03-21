@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SafeAreaView, TextInput, TouchableOpacity, Text, View, Image, StyleSheet, Pressable } from 'react-native';
-import { useSignUp, useUser } from "@clerk/clerk-expo";
+import { useSignUp } from "@clerk/clerk-expo";
 import styles from './SignUpCreateAccountStyle';
 
  
@@ -14,13 +14,6 @@ import styles from './SignUpCreateAccountStyle';
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
-  const {user} = useUser();
-  const [appUserInfo, setAppUserInfo] = React.useState({ //might need to change name of these json variables
-    userId: '',
-    email: '',
-    firstName: '',
-    lastName: ''
-  })
  
   // start the sign up process.
   const onSignUpPress = async () => {
