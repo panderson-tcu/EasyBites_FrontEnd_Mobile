@@ -1,83 +1,219 @@
-import React, {useState, useEffect} from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { FontAwesome6 } from '@expo/vector-icons';
-import styles from './ShoppingCartStyle'; // Import your styles
+import React, { useState, useEffect } from "react";
+import { View, SafeAreaView, ScrollView, Image } from "react-native";
+import ListItem from "../components/ListItem"; 
+import styles from "./ShoppingCartStyle";
 import axios from 'axios';
 
+const ShoppingCart = () => {
+  const [krogerToken, setKrogerToken] = useState(null); 
 
-const ShoppingCart = ({ route }) => {
-  console.log("entering shopping cart page")
-  // const {recipe} = route.params;
-  const [recipeInfo, setRecipeInfo] = useState();
-  // console.log(recipe)
-  // console.log(recipe.recipeId)
-  console.log("calling useEffect")
+  useEffect(() => {
+    const fetchKrogerToken = async () => {
+      try {
+        const user = 'easybites-c2a707875eab46789923efb8c484d6d5585439769308217340';
+        const pwd = 'V3FB6l8vIrwhjiz4XwtYKVij-_YEsuuiMFlymoVb';
+        const formData = new URLSearchParams();
+        formData.append('grant_type', 'client_credentials');
+        formData.append('scope', 'product.compact');
+        
+        const response = await axios.post('https://api.kroger.com/v1/connect/oauth2/token', formData,  
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa(`${user}:${pwd}`),
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          }
+        );
+        setKrogerToken(response.data.access_token);
+      } catch (error) {
+        console.error('Error:', error.response.data);
+      }
+    };
 
-  // const recipeId = recipe.recipeId
+    fetchKrogerToken();
+  }, []);
 
-  // useEffect(() => {
-  //   const fetchRecipeDetails = async () => {
+  const allRecipes = [
+    {
+      recipeId: 3,
+      title: "Taco Bowl",
+      cooktime: 35,
+      estimatedCost: 15.04,
+      ingredients: [
+        {
+          upcValue: "0001111085605"
+        },
+        {
+          upcValue: "0007096900006"
+        },
+        {
+          upcValue: "0000000004068"
+        },
+        {
+          upcValue: "0027157800000"
+        },
+        {
+          upcValue: "0001111085585"
+        },
+        {
+          upcValue: "0001341202172"
+        },
+        {
+          upcValue: "0001111066955"
+        },
+        {
+          upcValue: "0001111002452"
+        }
+      ],
+    },
+    {
+      recipeId: 155,
+      title: "Shrimp Tacos",
+      cooktime: 30,
+      estimatedCost: 16.73,
+      ingredients: [
+        {
+          upcValue: "0001111085605"
+        },
+        {
+          upcValue: "0007096900006"
+        },
+        {
+          upcValue: "0000000004068"
+        },
+        {
+          upcValue: "0027157800000"
+        },
+        {
+          upcValue: "0001111085585"
+        },
+        {
+          upcValue: "0001341202172"
+        },
+        {
+          upcValue: "0001111066955"
+        },
+        {
+          upcValue: "0001111002452"
+        }
+      ],
+  },
+  {
+      recipeId: 105,
+      title: "Crispy Potatoes with Eggs",
+      cooktime: 30,
+      imageUrl: "https://easybitesblobstorage.blob.core.windows.net/recipephotos/105-crispy-potatoes-with-eggs.png",
+      estimatedCost: 1.2,
+      ingredients: [
+        {
+          upcValue: "0001111085605"
+        },
+        {
+          upcValue: "0007096900006"
+        },
+        {
+          upcValue: "0000000004068"
+        },
+        {
+          upcValue: "0027157800000"
+        },
+        {
+          upcValue: "0001111085585"
+        },
+        {
+          upcValue: "0001341202172"
+        },
+        {
+          upcValue: "0001111066955"
+        },
+        {
+          upcValue: "0001111002452"
+        }
+      ],
+  },
+  {
+      recipeId: 106,
+      title: "Honey Soy Chicken",
+      cooktime: 30,
+      estimatedCost: 9.66,
+      ingredients: [
+        {
+          upcValue: "0001111085605"
+        },
+        {
+          upcValue: "0007096900006"
+        },
+        {
+          upcValue: "0000000004068"
+        },
+        {
+          upcValue: "0027157800000"
+        },
+        {
+          upcValue: "0001111085585"
+        },
+        {
+          upcValue: "0001341202172"
+        },
+        {
+          upcValue: "0001111066955"
+        },
+        {
+          upcValue: "0001111002452"
+        }
+      ],
+  },
+  {
+      recipeId: 107,
+      title: "Buffalo Chickpea Wrap",
+      cooktime: 20,
+      imageUrl: "https://easybitesblobstorage.blob.core.windows.net/recipephotos/107-buffalo-chickpea-wrap.png",
+      estimatedCost: 3.31,
+      ingredients: [
+        {
+          upcValue: "0001111085605"
+        },
+        {
+          upcValue: "0007096900006"
+        },
+        {
+          upcValue: "0000000004068"
+        },
+        {
+          upcValue: "0027157800000"
+        },
+        {
+          upcValue: "0001111085585"
+        },
+        {
+          upcValue: "0001341202172"
+        },
+        {
+          upcValue: "0001111066955"
+        },
+        {
+          upcValue: "0001111002452"
+        }
+      ],
+  },
+  ];
 
-  //     console.log("chicken butt")
-  //     if(recipeId){
-  //       axios.get(`http://localhost/recipes/${recipeId}`)
-  //       .then(response => {
-  //         console.log("pizza butt")
-  //         setRecipeInfo(response.data.data);
-  //       })
-  //       .catch(error => {
-  //         console.error("Error fetching recipeInfo:", error);
-  //       })
-  //     }
-  //   };
-  //   fetchRecipeDetails();
-
-  // }, [recipeId]);
-  
-
-  console.log(recipeInfo)
-
-  // console.log(recipeInfo.servings)
   return (
-    <ScrollView>
-        <View style={styles.imageContainer}>
-            {/* <Image source={require('../assets/chickpeasalad.png')} style={styles.cardImage} />
-            <TouchableOpacity style={styles.iconContainerLeft}>
-            <Ionicons name="chevron-back-outline" size={24} color="#FFF" />
-            </TouchableOpacity>
-            <View style={styles.iconContainerRight}>
-            <TouchableOpacity style={styles.icon}>
-                <FontAwesome6 name="heart" size={24} color="#FFF" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.icon}>
-                <Ionicons name="add-circle-outline" size={24} color="#FFF" />
-            </TouchableOpacity>
-            </View>
+    <SafeAreaView style={styles.home}>
+      <View style={styles.headerWrap}>
+        <Image
+          style={styles.EBLogo}
+          source={require("../assets/Small-EB-Logo.png")}
+        />
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.container}>
+          {allRecipes.map((recipe, index) => (
+            <ListItem key={index} recipe={recipe} krogerToken={krogerToken} />
+          ))}
         </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.recipeName}>{recipeInfo.title}</Text>
-          <View style={styles.allergenIcon}>
-            <FontAwesome6 name="wheat-awn" size={16} color="black" />
-          </View>
-          <View style={styles.recipeInfoRow}>
-            <Ionicons name="time-outline" size={16} style={styles.icon}></Ionicons>
-            <Text style={styles.recipeInfoItem}>{recipeInfo.cooktime} mins</Text>
-            <Ionicons name="people-outline" size={18} style={styles.icon}></Ionicons>
-            <Text style={styles.recipeInfoItem}>{recipeInfo.servings}</Text>
-            <FontAwesome6 name="dollar-sign" size={16} color="black" style={styles.icon}/>
-            <Text style={styles.recipeInfoItem}>{recipeInfo.estimatedCost}</Text>
-          </View>
-            <View style={styles.cardView}>
-              <Text style={styles.Title}>Ingredients</Text>
-              <Text style={styles.recipeIngredients}>{recipeInfo.ingredientsQuantity}</Text>
-            </View>
-            <View style={styles.bottomCardView}>
-              <Text style={styles.Title}>Directions</Text>
-              <Text style={styles.recipeDirections}>{recipeInfo.instructions}</Text>
-            </View> */}
-        </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

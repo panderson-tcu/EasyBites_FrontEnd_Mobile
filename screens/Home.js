@@ -34,8 +34,8 @@ const Home = () => {
       try {
         const token = await Clerk.session.getToken({ template: 'springBootJWT' });
         console.log(token)
-        await axios.get("http://localhost/recipes/approved",        
-        // await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
+        // await axios.get("http://localhost/recipes/approved",        
+        await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
           {
             headers: {
               Authorization: `Bearer ${token}`,

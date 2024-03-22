@@ -9,7 +9,8 @@ import Home from "./screens/Home";
 import ShoppingCart from "./screens/ShoppingCart";
 import Favorites from "./screens/Favorites";
 import Profile from "./screens/Profile";
-import RecipeInfo from './screens/RecipeInfo'
+import RecipeInfo from './screens/RecipeInfo';
+import ListItem from './components/ListItem'; // Import your ListItem component
 // navigation needed for app stack. run the below in app directory:
 // npm install @react-navigation/native @react-navigation/native-stack
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -129,6 +130,7 @@ function App () {
           <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
             <Stack.Screen name="RecipeInfo" component={RecipeInfo} options={{ headerShown: false }}/>
+            <Stack.Screen name="ListItem" component={ListItem} options={{ headerShown: false }}/>
             </Stack.Navigator>
           </NavigationContainer>
       </SignedIn>
