@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
       paddingBottom: '3%',
       width: '100%',
       flexWrap: 'wrap',
+      textDecorationLine: 'underline', 
     },
     recipePrice: {
       fontSize: 17,

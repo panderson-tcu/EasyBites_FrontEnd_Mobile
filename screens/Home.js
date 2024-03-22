@@ -18,7 +18,7 @@ import FilterPopup from '../components/FilterPopup';
 import styles from "./HomeStyle";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import axios from 'axios';
-import { useAuth } from "@clerk/clerk-expo";
+import { useAuth ,useUser } from "@clerk/clerk-expo";
 
 
 const Home = () => {
@@ -28,14 +28,30 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(null);
+  const {user} = useUser();
+  const [appUserInfo, setAppUserInfo] = React.useState({
+    userId: user.id,
+    email: user.primaryEmailAddress.emailAddress,
+    firstName: user.firstName,
+    lastName: user.lastName
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const token = await Clerk.session.getToken({ template: 'springBootJWT' });
-        console.log(token)
-        // await axios.get("http://localhost/recipes/approved",        
-        await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
+    const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+    try {
+      // await axios.get(`https://easybites-portal.azurewebsites.net/app-user/${user.id}`,
+      await axios.get(`http://localhost/app-user/${user.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+    } catch(error) {
+      if (error.response.data.code !== 200) {
+        axios.post("http://localhost/app-user", appUserInfo,     
+        // await axios.post("https://easybites-portal.azurewebsites.net/app-user",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -43,12 +59,36 @@ const Home = () => {
           } 
         )
         .then(response => {
-          setRecipes(response.data.data);
-        })
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
+          if(response.status==200){
+            console.log('User added successfully!');
+          }
+          else {
+            console.error(
+              'Failed to add user: ',
+              response.status,
+              response.statusText
+            );
+          }
+        });
       }
-    };
+    }
+
+    try{
+      // await axios.get("http://localhost/recipes/approved",        
+      await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        } 
+      )
+      .then(response => {
+        setRecipes(response.data.data);
+      })
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
   
     fetchData();
   }, []);

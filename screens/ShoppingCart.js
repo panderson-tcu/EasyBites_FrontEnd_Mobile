@@ -36,9 +36,9 @@ const ShoppingCart = () => {
   const allRecipes = [
     {
       recipeId: 3,
-      title: "Taco Bowl",
-      cooktime: 35,
-      estimatedCost: 15.04,
+      title: "Beef Pad See Ew",
+      cooktime: 60,
+      estimatedCost: 24.44,
       ingredients: [
         {
           upcValue: "0001111085605"

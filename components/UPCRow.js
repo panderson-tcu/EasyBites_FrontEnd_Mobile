@@ -22,6 +22,8 @@ import axios from 'axios';
 const UPCRow = ({upcValue, krogerToken}) => {
     // make kroger request to get image address and ingredient name
     const [krogerInfo, setKrogerInfo] = useState({});
+    const [isPressed, setIsPressed] = useState(false); // State to track if the icon is pressed
+
 
     useEffect(() => {
         // console.log(upcValue)
@@ -46,19 +48,26 @@ const UPCRow = ({upcValue, krogerToken}) => {
     }, [upcValue])
 
     console.log(krogerInfo)
+    const toggleIcon = () => {
+        setIsPressed(!isPressed); // Toggle the state when the icon is pressed
+    };
     
 
     return (
         <View style={styles.upcRowWrapper}>
-            {/* <Feather name="x-square" size={18} color="black"/> */}
-            <Pressable>
-                <Feather name="square" size={18} color="black" style={styles.xBox}/>
+            {/* Icon */}
+            <Pressable onPress={toggleIcon} style={styles.xBox}>
+                {isPressed ? (
+                    <Feather name="x-square" size={20} color="black"/>
+                ) : (
+                    <Feather name="square" size={20} color="black"  />
+                )}
             </Pressable>
             {/* image */}
             <Image source={{uri: `https://www.kroger.com/product/images/small/front/${upcValue}`}} style={styles.upcImage} />
             {/* <Image source={{uri: krogerInfo.images[0].sizes[4].url}}/> */}
             {/* ingredient name */}
-            <View style={styles.textContainer}>
+            <View style={[styles.textContainer, isPressed && styles.lineThrough]}>
                 <Text style={styles.textDescription}>{krogerInfo.description}</Text>
             </View>
         </View>

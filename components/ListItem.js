@@ -88,10 +88,10 @@ const ListItem = ({ recipe, krogerToken }) => {
             <View style={styles.mainContainer}>
               <Pressable  onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'ShoppingCart'}>
                 <Text style={styles.recipeName}>{recipe.title}</Text>
+              </Pressable>
                 <Text style={styles.recipePrice}>$12.87</Text>
                 {/* <Text style={styles.recipePrice}>${parseFloat(krogerToken.estimatedCost).toFixed(2)}</Text> */}
                 <Text style={styles.recipeTime}>{recipe.cooktime} minutes</Text>
-              </Pressable>
             </View>
             <View style={styles.arrowContainer}>
               <Ionicons name={expanded ? "chevron-up-outline" : "chevron-down-outline"} size={30} />
@@ -101,7 +101,6 @@ const ListItem = ({ recipe, krogerToken }) => {
             </View>
             {expanded && (
               <View style={styles.krogerInfo}>
-                <Text>UPC Values List:</Text>
                 {recipe.ingredients.map((ingredient, index) => (
                   <Pressable>
                     <UPCRow key={index} upcValue={ingredient.upcValue} krogerToken={krogerToken}/>

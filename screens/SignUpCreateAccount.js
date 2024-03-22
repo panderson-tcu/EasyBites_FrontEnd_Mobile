@@ -50,12 +50,9 @@ import styles from './SignUpCreateAccountStyle';
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
- 
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err) {
-      // console.error(JSON.stringify(err, null, 2));
       alert(err.errors[0].longMessage);
-
     }
   };
  
