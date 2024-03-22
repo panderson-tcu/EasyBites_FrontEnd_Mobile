@@ -29,7 +29,7 @@ const Home = () => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(null);
   const {user} = useUser();
-  const [appUserInfo, setAppUserInfo] = React.useState({ //might need to change name of these json variables
+  const [appUserInfo, setAppUserInfo] = React.useState({
     userId: user.id,
     email: user.primaryEmailAddress.emailAddress,
     firstName: user.firstName,
@@ -74,8 +74,8 @@ const Home = () => {
     }
 
     try{
-      await axios.get("http://localhost/recipes/approved",        
-      // await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
+      // await axios.get("http://localhost/recipes/approved",        
+      await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
         {
           headers: {
             Authorization: `Bearer ${token}`,

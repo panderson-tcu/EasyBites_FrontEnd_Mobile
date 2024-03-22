@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const RecipeInfo = ({ route }) => {
-  console.log("In RecipeInfo stack screen")
+  // console.log("In RecipeInfo stack screen")
   const {recipe} = route.params;
   const navigation = useNavigation();
   const [recipeInfo, setRecipeInfo] = useState({
@@ -34,10 +34,17 @@ const RecipeInfo = ({ route }) => {
   useEffect(() => {
 
     const fetchRecipeDetails = async () => {
+      const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
       if(recipeId){
-        axios.get(`http://localhost/recipes/${recipeId}`)
+        axios.get(`https://easybites-portal.azurewebsites.net/recipes/${recipeId}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        } )
         .then(response => {
-          console.log(response.data.data)
+          // console.log(response.data.data)
           setRecipeInfo(response.data.data);
         })
         .catch(error => {
@@ -50,8 +57,8 @@ const RecipeInfo = ({ route }) => {
   }, [recipeId]);
   
   
-  console.log("printing recipeInfo")
-  console.log(recipeInfo)
+  // console.log("printing recipeInfo")
+  // console.log(recipeInfo)
 
   const renderAllergenIcons = () => {
     return recipeInfo.allergens.map((allergen) => {
