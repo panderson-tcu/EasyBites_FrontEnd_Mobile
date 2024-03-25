@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
       // left: '80%',
       marginTop: '7%'
 
+    },
+    noneFound: {
+      color: "red"
     }
   });
 
