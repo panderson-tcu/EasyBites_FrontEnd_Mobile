@@ -290,7 +290,9 @@ const RecipeInfo = ({ route }) => {
         <View style={styles.imageContainer}>
             <Image source={{uri: recipeInfo.imageUrl}} style={styles.cardImage} />
             <Pressable style={styles.iconContainerLeft}>
-            <Ionicons name="chevron-back-outline" size={24} color="#FFF" onPress={() => navigation.navigate('Home')} currentPage={('RecipeInfo', { recipe })}/>
+              <View style={{ borderRadius: 10, padding: 5, backgroundColor: '#DBD1C6' }}>
+                <Ionicons name="chevron-back-outline" size={24} color="black" onPress={() => navigation.navigate('Home')} currentPage={('RecipeInfo', { recipe })}/>
+              </View>
             </Pressable>
             <View style={styles.iconContainerRight}>
             <Pressable style={styles.icon} onPress={clickLikeIcon}>
@@ -308,6 +310,7 @@ const RecipeInfo = ({ route }) => {
               )}
             </Pressable>
             </View>
+
         </View>
         <View style={styles.cardContent}>
           <Text style={styles.recipeName}>{recipeInfo.title}</Text>
@@ -315,11 +318,11 @@ const RecipeInfo = ({ route }) => {
             {renderAllergenIcons()}
           </View>
           <View style={styles.recipeInfoRow}>
-            <Ionicons name="time-outline" size={16} style={styles.icon}></Ionicons>
+            <Ionicons name="time-outline" size={16} style={styles.infoIcons}></Ionicons>
             <Text style={styles.recipeInfoItem}>{recipeInfo.cooktime} mins</Text>
-            <Ionicons name="people-outline" size={18} style={styles.icon}></Ionicons>
+            <Ionicons name="people-outline" size={18} style={styles.infoIcons}></Ionicons>
             <Text style={styles.recipeInfoItem}>{recipeInfo.servings}</Text>
-            <FontAwesome6 name="dollar-sign" size={16} color="black" style={styles.icon}/>
+            <FontAwesome6 name="dollar-sign" size={16} color="black" style={styles.infoIcons}/>
             <Text style={styles.recipeInfoItem}>{recipeInfo.estimatedCost}</Text>
           </View>
             <View style={styles.cardView}>

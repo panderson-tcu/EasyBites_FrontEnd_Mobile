@@ -112,22 +112,31 @@ const Home = () => {
   };
   
     fetchData();
-  }, []);
+  }, []);  
+
 
     const filteredRecipes = recipes.filter(recipe => {
       const includesSearchQuery = recipe.title.toLowerCase().includes(searchQuery.toLowerCase());
-  
     
       if (appliedFilters) {
         const { maxPrice, maxCookTime, selectedProteins } = appliedFilters;
-        const meetsPriceCriteria = !maxPrice || parseFloat(recipe.estimatedCost) <= maxPrice;
-        const meetsCookTimeCriteria = !maxCookTime || recipe.cooktime <= maxCookTime;
-        const meetsProteinCriteria = selectedProteins.length === 0 || selectedProteins.includes(recipe.protein.proteinName);
+        let meetsPriceCriteria = true;
+        let meetsCookTimeCriteria = true;
+        let meetsProteinCriteria = true;
+    
+        if (maxPrice !== undefined) {
+          meetsPriceCriteria = parseFloat(recipe.estimatedCost) <= maxPrice;
+        }
+    
+        if (maxCookTime !== undefined) {
+          meetsCookTimeCriteria = recipe.cooktime <= maxCookTime;
+        }
+        if (selectedProteins && selectedProteins.length > 0) {
+          meetsProteinCriteria = selectedProteins.includes(recipe.protein.proteinName);
+        }
         return includesSearchQuery && meetsPriceCriteria && meetsCookTimeCriteria && meetsProteinCriteria;
       }
-
-      
-  
+    
       return includesSearchQuery;
     });
   
@@ -159,11 +168,20 @@ const Home = () => {
         <Ionicons name="filter-outline" size={24} style={styles.filterIcon} onPress={() => setFilterVisible(true)} />        
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.cardWrapper}>
+        {/* <View style={styles.cardWrapper}>
           {filteredRecipes.map((recipe) => (
                         <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'} added={isLiked(recipe)}>
                         </RecipeCard>
                     ))}
+        </View> */}
+        <View style={styles.cardWrapper}>
+          {filteredRecipes.length > 0 ? (
+            filteredRecipes.map((recipe) => (
+              <RecipeCard key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'} />
+            ))
+          ) : (
+            <Text style={styles.noneFound}>No Recipes Found with applied filters{'\n'}</Text>
+          )}
         </View>
       </ScrollView>
       <FilterPopup visible={filterVisible} onClose={() => setFilterVisible(false)} onApply={handleApplyFilters} />

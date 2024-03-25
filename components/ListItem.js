@@ -63,9 +63,9 @@ const ListItem = ({ recipe, krogerToken }) => {
     .catch(error => {
       console.error("Error unadding a recipe:", error)
     })
-  }
+  };
 
-  const fetchKrogerData = async (upcValue) => {
+    const fetchKrogerData = async (upcValue) => {
     try {
       const response = await axios.get(`https://api.kroger.com/v1/products/${upcValue}?filter.locationId=03500520`, {
         headers: {
@@ -79,6 +79,7 @@ const ListItem = ({ recipe, krogerToken }) => {
     }
   };
 
+
   return (
     <View style={styles.wrap}>
       <TouchableWithoutFeedback onPress={onItemPress}>
@@ -88,7 +89,7 @@ const ListItem = ({ recipe, krogerToken }) => {
               <Pressable  onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'ShoppingCart'}>
                 <Text style={styles.recipeName}>{recipe.title}</Text>
               </Pressable>
-                <Text style={styles.recipePrice}>$12.87</Text>
+                <Text style={styles.recipePrice}>${recipe.estimatedCost}</Text>
                 {/* <Text style={styles.recipePrice}>${parseFloat(krogerToken.estimatedCost).toFixed(2)}</Text> */}
                 <Text style={styles.recipeTime}>{recipe.cooktime} minutes</Text>
             </View>

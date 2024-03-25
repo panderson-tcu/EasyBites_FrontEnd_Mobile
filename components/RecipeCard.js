@@ -204,7 +204,12 @@ const RecipeCard = ({recipe, onPress, currentPage, added}) => {
               <Card.Image style={styles.cardImage}source={{uri: recipe.imageUrl}} />
               <View style={styles.detailContainer}>
               <Text style={styles.recipeName}>{recipe.title}</Text>
-                <Text style={styles.recipePrice}>${parseFloat(recipe.estimatedCost).toFixed(2)}</Text>
+              <View style={styles.timeContainer}>
+              <Text style={styles.recipePrice}>${parseFloat(recipe.estimatedCost).toFixed(2)}</Text>
+                  <Ionicons name="people-outline" size={20} style={{ paddingLeft: 20 }}/>
+                  <Text style={styles.recipeTime}> {recipe.servings}</Text>
+                </View>
+                {/* <Text style={styles.recipePrice}>${parseFloat(recipe.estimatedCost).toFixed(2)}</Text> */}
                 <View style={styles.timeContainer}>
                   <Ionicons name="time-outline" size={20}/>
                   <Text style={styles.recipeTime}>{recipe.cooktime} mins</Text>
