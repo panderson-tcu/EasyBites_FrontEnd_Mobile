@@ -65,20 +65,19 @@ const ListItem = ({ recipe, krogerToken }) => {
     })
   };
 
-    const fetchKrogerData = async (upcValue) => {
-    try {
-      const response = await axios.get(`https://api.kroger.com/v1/products/${upcValue}?filter.locationId=03500520`, {
-        headers: {
-          Authorization: `Bearer ${krogerToken}`,
-        },
-      });
-      console.log("Kroger Data:", response.data.data);
-      // Do something with the Kroger data
-    } catch (error) {
-      console.error("Error fetching Kroger data:", error);
-    }
-  };
-
+  //   const fetchKrogerData = async (upcValue) => {
+  //   try {
+  //     const response = await axios.get(`https://api.kroger.com/v1/products/${upcValue}?filter.locationId=03500520`, {
+  //       headers: {
+  //         Authorization: `Bearer ${krogerToken}`,
+  //       },
+  //     });
+  //     console.log("Kroger Data:", response.data.data);
+  //     // Do something with the Kroger data
+  //   } catch (error) {
+  //     console.error("Error fetching Kroger data:", error);
+  //   }
+  // };
 
   return (
     <View style={styles.wrap}>

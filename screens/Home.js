@@ -177,7 +177,7 @@ const Home = () => {
         <View style={styles.cardWrapper}>
           {filteredRecipes.length > 0 ? (
             filteredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'} />
+              <RecipeCard key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'} added={isLiked(recipe)}/>
             ))
           ) : (
             <Text style={styles.noneFound}>No Recipes Found with applied filters{'\n'}</Text>
