@@ -116,7 +116,7 @@ function App () {
     <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkPublishableKey}>
       <SignedOut>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false }}>
+          <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false , orientation: "portrait_up"}}>
             <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
             <Stack.Screen name="SignUpCreateAccount" component={SignUpCreateAccount} options={{ headerShown: false }}/>
             <Stack.Screen name="Quiz" component={Quiz} options={{ headerShown: false}} />
@@ -127,7 +127,7 @@ function App () {
 
       <SignedIn>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false , orientation: 'portrait' }}>
             <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
             <Stack.Screen name="RecipeInfo" component={RecipeInfo} options={{ headerShown: false }}/>
             <Stack.Screen name="ListItem" component={ListItem} options={{ headerShown: false }}/>

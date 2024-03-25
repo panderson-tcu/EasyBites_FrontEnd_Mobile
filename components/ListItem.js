@@ -66,19 +66,20 @@ const ListItem = ({ recipe, krogerToken }) => {
     setExpanded(!expanded);
   };
 
-  const fetchKrogerData = async (upcValue) => {
-    try {
-      const response = await axios.get(`https://api.kroger.com/v1/products/${upcValue}?filter.locationId=03500520`, {
-        headers: {
-          Authorization: `Bearer ${krogerToken}`,
-        },
-      });
-      console.log("Kroger Data:", response.data.data);
-      // Do something with the Kroger data
-    } catch (error) {
-      console.error("Error fetching Kroger data:", error);
-    }
-  };
+  // const fetchKrogerData = async (upcValue) => {
+  //   try {
+  //     const response = await axios.get(`https://api.kroger.com/v1/products/${upcValue}?filter.locationId=03500520`, {
+  //       headers: {
+  //         Authorization: `Bearer ${krogerToken}`,
+  //       },
+  //     });
+  //     console.log("Kroger Data:", response.data.data);
+  //     // Do something with the Kroger data
+  //   } catch (error) {
+  //     console.error("Error fetching Kroger data:", error);
+  //   }
+  // };
+
 
   return (
     <View style={styles.wrap}>
@@ -89,7 +90,7 @@ const ListItem = ({ recipe, krogerToken }) => {
               <Pressable  onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'ShoppingCart'}>
                 <Text style={styles.recipeName}>{recipe.title}</Text>
               </Pressable>
-                <Text style={styles.recipePrice}>$12.87</Text>
+                <Text style={styles.recipePrice}>${recipe.estimatedCost}</Text>
                 {/* <Text style={styles.recipePrice}>${parseFloat(krogerToken.estimatedCost).toFixed(2)}</Text> */}
                 <Text style={styles.recipeTime}>{recipe.cooktime} minutes</Text>
             </View>
