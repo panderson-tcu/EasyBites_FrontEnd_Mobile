@@ -40,7 +40,7 @@ const Home = () => {
     const fetchData = async () => {
     const token = await Clerk.session.getToken({ template: 'springBootJWT' });
 
-    try {
+    try { //get user info
       await axios.get(`https://easybites-portal.azurewebsites.net/app-user/${user.id}`,
       // await axios.get(`http://localhost/app-user/${user.id}`,
       {
@@ -49,9 +49,9 @@ const Home = () => {
         }
       });
     } catch(error) {
-      if (error.response.data.code !== 200) {
-        axios.post("http://localhost/app-user", appUserInfo,     
-        // await axios.post("https://easybites-portal.azurewebsites.net/app-user",
+      if (error.response.data.code !== 200) { // post user info
+        // axios.post("http://localhost/app-user", appUserInfo,     
+        await axios.post("https://easybites-portal.azurewebsites.net/app-user", appUserInfo,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -73,7 +73,7 @@ const Home = () => {
       }
     }
 
-    try{
+    try{ // get approved recipes
       // await axios.get("http://localhost/recipes/approved",        
       await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
         {
@@ -91,8 +91,8 @@ const Home = () => {
   };
   
     fetchData();
-  }, []);
-  
+  }, []);  
+
 
     const filteredRecipes = recipes.filter(recipe => {
       const includesSearchQuery = recipe.title.toLowerCase().includes(searchQuery.toLowerCase());
