@@ -8,30 +8,72 @@ ScrollView,
 TextInput,
 Image
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import RecipeCard from "../components/RecipeCard";
 import styles from "./FavoritesStyle";
 import axios from 'axios';
+import { useAuth, useUser } from "@clerk/clerk-expo";
 
 
 const Favorites = () => {
     const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
+  const [addedRecipes, setAddedRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const {user} = useUser();
+
+
+  const fetchLikedRecipes = async () => {
+        const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+        console.log("retrieving all recipes from backend")
+        axios.get(`https://easybites-portal.azurewebsites.net/app-user/liked/${user.id}`,
+        // axios.get(`http:/localhost/app-user/liked/${user.id}`,
+        {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+        })
+        .then(response => {
+            setRecipes(response.data.data);
+        })
+        .catch(error => {
+            console.error("Error fetching recipes:", error);
+        })
+    }
+
+    const fetchAddedRecipes = async () => {
+        const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+        console.log("retrieving all recipes from backend")
+        axios.get(`https://easybites-portal.azurewebsites.net/app-user/shoppingCart/${user.id}`,
+        // axios.get(`http:/localhost/app-user/shoppingCart/${user.id}`,
+        {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+        })
+        .then(response => {
+            setAddedRecipes(response.data.data);
+        })
+        .catch(error => {
+            console.error("Error fetching recipes:", error);
+        })
+    }
 
   console.log("entering Home page")
-  // useEffect(() => {
-  //   console.log("retrieving all recipes from backend")
-  //   // axios.get("https://easybites-portal.azurewebsites.net/recipes/approved")
-  //   axios.get("http:/localhost/recipes/approved")
-  //     .then(response => {
-  //       setRecipes(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching recipes:", error);
-  //     })
-  // }, []);
+  useFocusEffect(
+    React.useCallback(() =>{
+        fetchLikedRecipes();
+        fetchAddedRecipes();
+    }, [])
+  );
+
+  isAdded = (recipe) => {
+    return addedRecipes.some(addedRecipes => addedRecipes.recipeId === recipe.recipeId);
+  }
+
 
   const allRecipes = [
         {
@@ -346,7 +388,7 @@ const Favorites = () => {
     const handleSearch = (query) => {
       setSearchQuery(query);
     };
-    const filteredRecipes = allRecipes.filter((recipe) =>
+    const filteredRecipes = recipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -370,7 +412,7 @@ const Favorites = () => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>
           {filteredRecipes.map((recipe) => (
-                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Favorites'}>
+                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Favorites'} added={isAdded(recipe)}>
                         </RecipeCard>
                     ))}
         </View>

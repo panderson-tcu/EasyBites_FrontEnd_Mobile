@@ -25,6 +25,7 @@ const Home = () => {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
   const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
+  const [likedRecipes, setLikedRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterVisible, setFilterVisible] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState(null);
@@ -73,6 +74,26 @@ const Home = () => {
       }
     }
 
+    const fetchLikedRecipes = async () => {
+      const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+      console.log("retrieving all recipes from backend")
+      axios.get(`https://easybites-portal.azurewebsites.net/app-user/liked/${user.id}`,
+      // axios.get(`http:/localhost/app-user/liked/${user.id}`,
+      {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      }
+      })
+      .then(response => {
+          setLikedRecipes(response.data.data);
+      })
+      .catch(error => {
+          console.error("Error fetching recipes:", error);
+      })
+  }
+  fetchLikedRecipes();
+
     try{ // get approved recipes
       // await axios.get("http://localhost/recipes/approved",        
       await axios.get("https://easybites-portal.azurewebsites.net/recipes/approved",
@@ -114,6 +135,10 @@ const Home = () => {
       setAppliedFilters(filters);
       setFilterVisible(false);
     };
+
+    isLiked = (recipe) => {
+      return likedRecipes.some(likedRecipe => likedRecipe.recipeId === recipe.recipeId);
+    }
     
   return (
     <SafeAreaView style={styles.home}>
@@ -136,7 +161,7 @@ const Home = () => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.cardWrapper}>
           {filteredRecipes.map((recipe) => (
-                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'}>
+                        <RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'} added={isLiked(recipe)}>
                         </RecipeCard>
                     ))}
         </View>
