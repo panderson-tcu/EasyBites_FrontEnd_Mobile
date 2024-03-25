@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -14,11 +14,17 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './RecipeCardStyling'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAuth ,useUser } from "@clerk/clerk-expo";
+import axios from 'axios';
 
 
-const RecipeCard = ({recipe, onPress, currentPage}) => {
+const RecipeCard = ({recipe, onPress, currentPage, added}) => {
     // console.log("recipe card rendering")
     let allergens = recipe.allergens;
+    const {user} = useUser();
+    const [isPressed, setIsPressed] = useState(added); // State to track if the icon is pressed
+
+
     // console.log(allergens)
 
     const renderAllergenIcons = () => {
@@ -79,16 +85,122 @@ const RecipeCard = ({recipe, onPress, currentPage}) => {
       });
     };
 
+    const clickIcon = async () => {
+      const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+      console.log("clicked icon")
+      if(currentPage === 'Home'){
+        console.log("clicked like icon")
+
+        if(isPressed){
+          console.log("unliking a recipe")
+          // axios.patch(`http://localhost/recipes/removeLike/${recipe.recipeId}/${user.id}`, {},
+            axios.patch(`https://easybites-portal.azurewebsites.net/recipes/removeLike/${recipe.recipeId}/${user.id}`, {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              }
+            } )
+            .then (response => {
+              console.log("removed a like")
+              console.log(response)
+              toggleIcon()
+            })
+            .catch(error => {
+              console.error("Error liking recipe:", error)
+            })
+          }
+        else {
+          console.log("liking a recipe")
+
+          // axios.patch(`http://localhost/recipes/like/${recipe.recipeId}/${user.id}`, {},
+        axios.patch(`https://easybites-portal.azurewebsites.net/recipes/like/${recipe.recipeId}/${user.id}`, {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          } )
+          .then (response => {
+            console.log("liked a recipe")
+            console.log(response)
+            toggleIcon()
+          })
+          .catch(error => {
+            console.error("Error liking recipe:", error)
+          })
+        }
+      }
+      if (currentPage === 'Favorites') {
+        console.log("clicked add icon")
+
+        if(isPressed){
+          console.log("unadding a recipe from shopping cart")
+          // axios.patch(`http://localhost/recipes/removeShoppingCart/${recipe.recipeId}/${user.id}`, {},
+            axios.patch(`https://easybites-portal.azurewebsites.net/recipes/removeShoppingCart/${recipe.recipeId}/${user.id}`, {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              }
+            } )
+            .then (response => {
+              console.log("unadded a recipe")
+              console.log(response)
+              toggleIcon()
+            })
+            .catch(error => {
+              console.error("Error adding a recipe:", error)
+            })
+          }
+        else {
+          console.log("adding a recipe to shopping cart")
+
+          // axios.patch(`http://localhost/recipes/shoppingCart/${recipe.recipeId}/${user.id}`, {},
+        axios.patch(`https://easybites-portal.azurewebsites.net/recipes/shoppingCart/${recipe.recipeId}/${user.id}`, {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          } )
+          .then (response => {
+            console.log("added a recipe")
+            console.log(response)
+            toggleIcon()
+          })
+          .catch(error => {
+            console.error("Error liking recipe:", error)
+          })
+        }
+      }
+    }    
+
+    const toggleIcon = () => {
+      console.log("toggling icon")
+      setIsPressed(!isPressed); // Toggle the state when the icon is pressed
+    };
+
 
     return (
       <TouchableOpacity onPress={onPress} style={styles.cardView}>
           <Card containerStyle={styles.cardComponent}>
             <View style={styles.cardImageContainer}>
             <View style={styles.timeContainer}>
-                <View style={styles.actionIcon}>
-                {currentPage === 'Home' && <Ionicons name="heart-outline" size={24}/>}
-                {currentPage === 'Favorites' && <Ionicons name="add-circle-outline" size={24}/>}
-                </View>
+                  <View style={styles.actionIcon}>
+                      {currentPage === 'Home' &&                     
+                        <Pressable onPress={clickIcon}>
+                          {isPressed ? (
+                            <Ionicons name="heart" size={24}/>
+                          ) : (
+                            <Ionicons name="heart-outline" size={24}/>
+                          )}
+                        </Pressable>}
+                      {currentPage === 'Favorites' && 
+                        <Pressable onPress={clickIcon}>
+                        {isPressed ? (
+                          <Ionicons name="add-circle" size={24}/>
+                        ) : (
+                          <Ionicons name="add-circle-outline" size={24}/>
+                        )}
+                      </Pressable>}
+                  </View>
               <Card.Image style={styles.cardImage}source={{uri: recipe.imageUrl}} />
               <View style={styles.detailContainer}>
               <Text style={styles.recipeName}>{recipe.title}</Text>

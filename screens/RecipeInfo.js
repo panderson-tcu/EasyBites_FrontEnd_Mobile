@@ -6,12 +6,15 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './RecipeInfoStyle'; // Import your styles
 import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAuth ,useUser } from "@clerk/clerk-expo";
 
 
 const RecipeInfo = ({ route }) => {
   // console.log("In RecipeInfo stack screen")
   const {recipe} = route.params;
   const navigation = useNavigation();
+  const [addedRecipes, setAddedRecipes] = useState([]);
+  const [likedRecipes, setLikedRecipes] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState({
     title: '',
     cooktime: '',
@@ -24,6 +27,10 @@ const RecipeInfo = ({ route }) => {
     appliances: [],
     allergens: [],
   });
+  const [isLiked, setIsLiked] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+  const {user} = useUser();
+
   // console.log(recipe)
   // console.log(recipe.recipeId)
   // console.log("about to call useEffect")
@@ -44,6 +51,7 @@ const RecipeInfo = ({ route }) => {
           }
         } )
         .then(response => {
+          console.log("recipe details fetched successfully")
           // console.log(response.data.data)
           setRecipeInfo(response.data.data);
         })
@@ -54,9 +62,166 @@ const RecipeInfo = ({ route }) => {
     };
     fetchRecipeDetails();
 
+    const fetchLikedRecipes = async () => {
+      const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+      console.log("retrieving liked recipes from backend")
+      axios.get(`https://easybites-portal.azurewebsites.net/app-user/liked/${user.id}`,
+      // axios.get(`http:/localhost/app-user/liked/${user.id}`,
+      {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      }
+      })
+      .then(response => {
+          setLikedRecipes(response.data.data);
+          console.log("liked recipes fetched successfully")
+          setIsLiked(response.data.data.some(likedRecipe => likedRecipe.recipeId === recipe.recipeId));
+          console.log("value of isLiked", isLiked)
+      })
+      .catch(error => {
+          console.error("Error fetching recipes:", error);
+      })
+  }
+  fetchLikedRecipes();
+
+  const fetchAddedRecipes = async () => {
+    const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+    console.log("retrieving added recipes from backend")
+    axios.get(`https://easybites-portal.azurewebsites.net/app-user/shoppingCart/${user.id}`,
+    // axios.get(`http:/localhost/app-user/shoppingCart/${user.id}`,
+    {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    }
+    })
+    .then(response => {
+        setAddedRecipes(response.data.data);
+        console.log("added recipes fetched successfully")
+        setIsAdded(response.data.data.some(addedRecipe => addedRecipe.recipeId === recipe.recipeId));
+        console.log("value of isAdded", isAdded)
+    })
+    .catch(error => {
+        console.error("Error fetching recipes:", error);
+    })
+}
+  fetchAddedRecipes();
+
+
+
+  console.log("value of isLiked", isLiked)
+  console.log("value of isAdded", isAdded)
+
+
   }, [recipeId]);
   
+  const clickLikeIcon = async () => {
+    const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+      console.log("clicked like icon")
+
+      if(isLiked){
+        console.log("unliking a recipe")
+        // axios.patch(`http://localhost/recipes/removeLike/${recipe.recipeId}/${user.id}`, {},
+          axios.patch(`https://easybites-portal.azurewebsites.net/recipes/removeLike/${recipe.recipeId}/${user.id}`, {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          } )
+          .then (response => {
+            console.log("removed a like")
+            console.log(response)
+            toggleLikeIcon()
+          })
+          .catch(error => {
+            console.error("Error liking recipe:", error)
+          })
+        }
+      else {
+        console.log("liking a recipe")
+
+        // axios.patch(`http://localhost/recipes/like/${recipe.recipeId}/${user.id}`, {},
+      axios.patch(`https://easybites-portal.azurewebsites.net/recipes/like/${recipe.recipeId}/${user.id}`, {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        } )
+        .then (response => {
+          console.log("liked a recipe")
+          console.log(response)
+          toggleLikeIcon()
+        })
+        .catch(error => {
+          console.error("Error liking recipe:", error)
+        })
+      }
+  }
+
+  const clickAddIcon = async () => {
+    const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+      console.log("clicked add icon")
+      if(isAdded){
+        console.log("unadding a recipe from shopping cart")
+        // axios.patch(`http://localhost/recipes/removeShoppingCart/${recipe.recipeId}/${user.id}`, {},
+          axios.patch(`https://easybites-portal.azurewebsites.net/recipes/removeShoppingCart/${recipe.recipeId}/${user.id}`, {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          } )
+          .then (response => {
+            console.log("unadded a recipe")
+            console.log(response)
+            toggleAddIcon()
+          })
+          .catch(error => {
+            console.error("Error adding a recipe:", error)
+          })
+        }
+      else {
+        console.log("adding a recipe to shopping cart")
+
+        // axios.patch(`http://localhost/recipes/shoppingCart/${recipe.recipeId}/${user.id}`, {},
+      axios.patch(`https://easybites-portal.azurewebsites.net/recipes/shoppingCart/${recipe.recipeId}/${user.id}`, {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        } )
+        .then (response => {
+          console.log("added a recipe")
+          console.log(response)
+          toggleAddIcon()
+        })
+        .catch(error => {
+          console.error("Error liking recipe:", error)
+        })
+      }
+  }
+
+  const toggleLikeIcon = () => {
+    console.log("toggling liked icon")
+    setIsLiked(!isLiked); // Toggle the state when the icon is pressed
+  };
+
+  const toggleAddIcon = () => {
+    console.log("toggling added icon")
+    setIsAdded(!isAdded); // Toggle the state when the icon is pressed
+  };
+
+  // isLiked = () => {
+  //   return likedRecipes.some(likedRecipe => likedRecipe.recipeId === recipeId);
+  // }
+
+  // isAdded = () => {
+  //   return addedRecipes.some(addedRecipes => addedRecipes.recipeId === recipeId);
+  // }
   
+
+
   // console.log("printing recipeInfo")
   // console.log(recipeInfo)
 
@@ -130,16 +295,20 @@ const RecipeInfo = ({ route }) => {
               </View>
             </Pressable>
             <View style={styles.iconContainerRight}>
-            <TouchableOpacity style={styles.icon}>
-              <View style={{ borderRadius: 10, padding: 5, backgroundColor: '#DBD1C6' }}>
-                  <FontAwesome6 name="heart" size={24} color="black"/>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.icon}>
-              <View style={{ borderRadius: 10, padding: 5, backgroundColor: '#DBD1C6' }}>
-                  <Ionicons name="add-circle-outline" size={24} color="black" />
-                </View>
-            </TouchableOpacity>
+            <Pressable style={styles.icon} onPress={clickLikeIcon}>
+              { isLiked ? (
+                <Ionicons name="heart" size={24} color='#FFF'/>
+              ) : (
+                <Ionicons name="heart-outline" size={24} color='#FFF'/>
+              )}
+            </Pressable>
+            <Pressable style={styles.icon} onPress={clickAddIcon}>
+              { isAdded ? (
+                <Ionicons name="add-circle" size={24} color='#FFF'/>
+              ): (
+                <Ionicons name="add-circle-outline" size={24} color='#FFF'/>
+              )}
+            </Pressable>
             </View>
 
         </View>

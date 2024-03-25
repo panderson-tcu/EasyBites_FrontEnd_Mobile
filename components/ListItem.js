@@ -6,6 +6,7 @@ import styles from './ListItemStyle';
 import axios from "axios";
 import UPCRow from "./UPCRow";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth ,useUser } from "@clerk/clerk-expo";
 
 
 const CollapsibleContainer = ({ children, expanded }) => {
@@ -26,28 +27,6 @@ const CollapsibleContainer = ({ children, expanded }) => {
     };
   }, [expanded]);
 
-  // const regularPrice = jsonObj.items[0].price.regular;
-  // console.log(regularPrice);
-  
-  // const calculateRecipeCost = (recipe) => {
-  //   let totalCost = 0;
-
-  //   // Iterate over each item in the recipe
-  //   recipe.ingredients.forEach((ingredient) => {
-  //       // Access the regular price of the item
-  //       const regularPrice = ingredient.price.regular;
-        
-  //       // Add the regular price to the total cost
-  //       totalCost += regularPrice;
-  //   });
-
-  //   return totalCost;
-  // };
-
-  // const recipeCost = calculateRecipeCost(recipe);
-  // console.log("Total cost of the recipe:", recipeCost);
-
-
   return (
     <Animated.View style={[collapsibleStyle, { overflow: "hidden" }]}>
       <View style={{ position: "absolute" }} onLayout={onLayout}>
@@ -60,13 +39,33 @@ const CollapsibleContainer = ({ children, expanded }) => {
 const ListItem = ({ recipe, krogerToken }) => {
   const [expanded, setExpanded] = useState(false);
   const navigation = useNavigation();
-
+  const {user} = useUser();
 
   const onItemPress = () => {
     setExpanded(!expanded);
   };
 
-  // const fetchKrogerData = async (upcValue) => {
+  const unaddRecipe = async() => {
+    const token = await Clerk.session.getToken({ template: 'springBootJWT' });
+
+    console.log("unadding a recipe from shopping cart")
+    // axios.patch(`http://localhost/recipes/removeShoppingCart/${recipe.recipeId}/${user.id}`, {},
+    axios.patch(`https://easybites-portal.azurewebsites.net/recipes/removeShoppingCart/${recipe.recipeId}/${user.id}`, {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    } )
+    .then (response => {
+      console.log("unadded a recipe")
+      console.log(response)
+    })
+    .catch(error => {
+      console.error("Error unadding a recipe:", error)
+    })
+  };
+
+  //   const fetchKrogerData = async (upcValue) => {
   //   try {
   //     const response = await axios.get(`https://api.kroger.com/v1/products/${upcValue}?filter.locationId=03500520`, {
   //       headers: {
@@ -79,7 +78,6 @@ const ListItem = ({ recipe, krogerToken }) => {
   //     console.error("Error fetching Kroger data:", error);
   //   }
   // };
-
 
   return (
     <View style={styles.wrap}>
@@ -96,7 +94,7 @@ const ListItem = ({ recipe, krogerToken }) => {
             </View>
             <View style={styles.arrowContainer}>
               <Ionicons name={expanded ? "chevron-up-outline" : "chevron-down-outline"} size={30} />
-              <Pressable style={styles.removeButton}>
+              <Pressable style={styles.removeButton} onPress={unaddRecipe}>
                 <Ionicons name="remove-circle-outline" size={24} />
               </Pressable>
             </View>
