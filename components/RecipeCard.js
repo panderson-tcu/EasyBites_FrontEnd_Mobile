@@ -19,13 +19,13 @@ import axios from 'axios';
 
 
 const RecipeCard = ({recipe, onPress, currentPage, added}) => {
-    // console.log("recipe card rendering")
     let allergens = recipe.allergens;
     const {user} = useUser();
     const [isPressed, setIsPressed] = useState(added); // State to track if the icon is pressed
 
-
-    // console.log(allergens)
+    useEffect(() => {
+      setIsPressed(added);
+    }, [added])
 
     const renderAllergenIcons = () => {
       return allergens.map((allergen) => {
@@ -213,10 +213,6 @@ const RecipeCard = ({recipe, onPress, currentPage, added}) => {
                 <View style={styles.timeContainer}>
                   <Ionicons name="time-outline" size={20}/>
                   <Text style={styles.recipeTime}>{recipe.cooktime} mins</Text>
-                </View>
-                <View>
-                  <Ionicons name="people-outline" size={18} style={styles.icon}></Ionicons>
-                  <Text style={styles.recipeServing}>{recipe.servings}</Text>
                 </View>
               <View style={styles.allergenIconsContainer}>
                   {renderAllergenIcons()}
