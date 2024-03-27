@@ -214,10 +214,10 @@ const RecipeCard = ({recipe, onPress, currentPage, added}) => {
                   <Ionicons name="time-outline" size={20}/>
                   <Text style={styles.recipeTime}>{recipe.cooktime} mins</Text>
                 </View>
-                <View>
+                {/* <View>
                   <Ionicons name="people-outline" size={18} style={styles.icon}></Ionicons>
                   <Text style={styles.recipeServing}>{recipe.servings}</Text>
-                </View>
+                </View> */}
               <View style={styles.allergenIconsContainer}>
                   {renderAllergenIcons()}
                 </View> 
