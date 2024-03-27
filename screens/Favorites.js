@@ -17,12 +17,12 @@ import { useAuth, useUser } from "@clerk/clerk-expo";
 
 
 const Favorites = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const [recipes, setRecipes] = useState([]);
   const [addedRecipes, setAddedRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const {user} = useUser();
-
+  
 
   const fetchLikedRecipes = async () => {
         const token = await Clerk.session.getToken({ template: 'springBootJWT' });
@@ -46,7 +46,7 @@ const Favorites = () => {
     const fetchAddedRecipes = async () => {
         const token = await Clerk.session.getToken({ template: 'springBootJWT' });
 
-        console.log("retrieving all recipes from backend")
+        console.log("retrieving added recipes from backend")
         axios.get(`https://easybites-portal.azurewebsites.net/app-user/shoppingCart/${user.id}`,
         // axios.get(`http:/localhost/app-user/shoppingCart/${user.id}`,
         {
@@ -56,13 +56,14 @@ const Favorites = () => {
         })
         .then(response => {
             setAddedRecipes(response.data.data);
+            console.log(response.data.data)
         })
         .catch(error => {
             console.error("Error fetching recipes:", error);
         })
     }
 
-  console.log("entering Home page")
+  console.log("entering Favorites page")
   useFocusEffect(
     React.useCallback(() =>{
         fetchLikedRecipes();
@@ -71,7 +72,8 @@ const Favorites = () => {
   );
 
   isAdded = (recipe) => {
-    return addedRecipes.some(addedRecipes => addedRecipes.recipeId === recipe.recipeId);
+    console.log("refreshing added recipes icon");
+    return addedRecipes.some(addedRecipe => addedRecipe.recipeId === recipe.recipeId);
   }
 
     const handleSearch = (query) => {
@@ -101,16 +103,25 @@ const Favorites = () => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <View style={styles.cardWrapper}>
         {filteredRecipes.length > 0 ? (
-                filteredRecipes.map((recipe) => (
-<RecipeCard style={styles.card} key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Favorites'} added={isAdded(recipe)}>
-                        </RecipeCard>                ))
-            ) : (
-                <View style={styles.noRecipesContainer}>
-                <Text style={styles.noRecipes}> You have no favroited recipes. {'\n'} Like a recipe by pressing <Ionicons name="heart-outline" size={24} color='#000'/> </Text>     
-                </View>              
-            )}    
-
+            filteredRecipes.map((recipe) => (
+            <RecipeCard
+                style={styles.card} 
+                key={recipe.recipeId} 
+                recipe={recipe} 
+                onPress={() => navigation.navigate('RecipeInfo', { recipe })} 
+                currentPage={'Favorites'} 
+                added={isAdded(recipe)}
+            />
+            ))
+        ) : (
+            <View style={styles.noRecipesContainer}>
+            <Text style={styles.noRecipes}>
+                You have no favorited recipes. {'\n'} Like a recipe by pressing <Ionicons name="heart-outline" size={24} color='#000'/> 
+            </Text>     
+            </View>              
+        )}
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );

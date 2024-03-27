@@ -11,7 +11,7 @@ import {
   TextInput,
   Image
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import RecipeCard from "../components/RecipeCard";
 import FilterPopup from '../components/FilterPopup';
@@ -37,8 +37,7 @@ const Home = () => {
     lastName: user.lastName
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
     const token = await Clerk.session.getToken({ template: 'springBootJWT' });
 
     try { //get user info
@@ -110,9 +109,16 @@ const Home = () => {
       console.error("Error fetching recipes:", error);
     }
   };
-  
-    fetchData();
-  }, []);  
+
+  useFocusEffect(
+    React.useCallback(() =>{
+        fetchData()
+    }, [])
+  );
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);  
 
 
     const filteredRecipes = recipes.filter(recipe => {
@@ -177,7 +183,12 @@ const Home = () => {
         <View style={styles.cardWrapper}>
           {filteredRecipes.length > 0 ? (
             filteredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.recipeId} recipe={recipe} onPress={() => navigation.navigate('RecipeInfo', { recipe })} currentPage={'Home'} added={isLiked(recipe)}/>
+              <RecipeCard 
+                key={recipe.recipeId} 
+                recipe={recipe} 
+                onPress={() => navigation.navigate('RecipeInfo', { recipe })} 
+                currentPage={'Home'} 
+                added={isLiked(recipe)}/>
             ))
           ) : (
             <Text style={styles.noneFound}>No Recipes Found with applied filters{'\n'}</Text>
