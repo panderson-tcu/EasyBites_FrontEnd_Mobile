@@ -76,7 +76,6 @@ const Favorites = () => {
     return addedRecipes.some(addedRecipe => addedRecipe.recipeId === recipe.recipeId);
   }
 
-
     const handleSearch = (query) => {
       setSearchQuery(query);
     };
@@ -102,17 +101,27 @@ const Favorites = () => {
           />
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.cardWrapper}>
-          {filteredRecipes.map((recipe) => (
-                        <RecipeCard style={styles.card} 
-                            key={recipe.recipeId} 
-                            recipe={recipe} 
-                            onPress={() => navigation.navigate('RecipeInfo', { recipe })} 
-                            currentPage={'Favorites'} 
-                            added={isAdded(recipe)}>
-                        </RecipeCard>
-                    ))}
+      <View style={styles.cardWrapper}>
+        {filteredRecipes.length > 0 ? (
+            filteredRecipes.map((recipe) => (
+            <RecipeCard
+                style={styles.card} 
+                key={recipe.recipeId} 
+                recipe={recipe} 
+                onPress={() => navigation.navigate('RecipeInfo', { recipe })} 
+                currentPage={'Favorites'} 
+                added={isAdded(recipe)}
+            />
+            ))
+        ) : (
+            <View style={styles.noRecipesContainer}>
+            <Text style={styles.noRecipes}>
+                You have no favorited recipes. {'\n'} Like a recipe by pressing <Ionicons name="heart-outline" size={24} color='#000'/> 
+            </Text>     
+            </View>              
+        )}
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );
